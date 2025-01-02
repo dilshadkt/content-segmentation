@@ -18,7 +18,7 @@ const BranchesTarget = () => {
           location="ABU DHABI"
           subtitle="Earnings Today"
         />
-        <CircularProgress
+        {/* <CircularProgress
           currentValue={350}
           target={2000}
           location="ABU DHABI"
@@ -29,7 +29,7 @@ const BranchesTarget = () => {
           target={2000}
           location="ABU DHABI"
           subtitle="Earnings Today"
-        />
+        /> */}
       </div>
     </section>
   );
