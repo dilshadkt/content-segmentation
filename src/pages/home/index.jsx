@@ -19,7 +19,6 @@ const DashboardHome = () => {
     setFullScreenModalOpen,
     Graph,
   } = UseCommon();
-  console.log(Graph);
 
   return (
     <section className="w-full h-full gap-y-4  flex flex-col overflow-y-auto">
