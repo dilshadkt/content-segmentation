@@ -7,10 +7,11 @@ const Sidebar = () => {
   const { isSideBarOpen, setSideBarOpen } = UseCommon();
   return (
     <section
-      className={`transition-all hidden md:flex duration-300 bg-[#1A1A1A] h-full gap-y-8 py-6 
+      className={`transition-all hidden md:flex duration-300
+         bg-[#1A1A1A] h-full gap-y-8 py-6 
           justify-between flex-col ${
             isSideBarOpen
-              ? "translate-x-0 w-[280px] pl-6 pr-4"
+              ? "translate-x-0 min-w-[280px] pl-6 pr-4"
               : "-translate-x-full w-[0] pl-0 pr-0"
           }`}
     >

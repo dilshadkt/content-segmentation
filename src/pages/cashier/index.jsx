@@ -33,11 +33,16 @@ const CashierReport = () => {
           </div>
         </div>
         <div className="rounded-lg">
-          <CashierPerformance className={"h-full"} />
+          <CashierPerformance
+            innerRadius={58}
+            outerRadius={95}
+            className={"h-full"}
+            listClassName={" xl:grid-cols-2"}
+          />{" "}
         </div>
       </div>
       <div className=" grid lg:grid-cols-2 gap-3">
-        <div className="bg-[#0D0D0D] p-5 rounded-lg flex flex-col">
+        <div className="bg-[#0D0D0D] p-5  rounded-lg flex flex-col">
           <span className="text-2xl font-semibold">C1</span>
           <div className="flex flex-col mt-5 gap-y-3">
             <p className="text-sm font-light text-[#FAFAFA]">Cashier Name</p>
@@ -64,7 +69,12 @@ const CashierReport = () => {
           </div>
         </div>
         <div className="rounded-lg">
-          <CashierPerformance className={"h-full"} />
+          <CashierPerformance
+            innerRadius={58}
+            outerRadius={95}
+            className={"h-full"}
+            listClassName={" xl:grid-cols-2"}
+          />{" "}
         </div>
       </div>
     </section>

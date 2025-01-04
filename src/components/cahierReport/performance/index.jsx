@@ -20,9 +20,8 @@ const data = [
 
 const COLORS = ["#BC277E", "#00C7BE", "#F68058", "#F8E27F"];
 
-const CashierPerformance = ({ className, graphClassName }) => {
-  const { isSideBarOpen, isFullScreenModalOpen, setFullScreenModalOpen } =
-    UseCommon();
+const CashierPerformance = ({ className, listClassName, graphClassName }) => {
+  const { isSideBarOpen, isFullScreenModalOpen } = UseCommon();
   return (
     <section
       className={` ${
@@ -42,12 +41,12 @@ const CashierPerformance = ({ className, graphClassName }) => {
         </div>
       )}
       <div
-        className={`relative grid ${
+        className={`relative grid  ${
           isSideBarOpen ? ` grid-cols-3 xl:grid-cols-2` : ` grid-cols-2`
         }   min-h-[340px]  md:h-full gap-y-2 `}
       >
         <div className="flex text-[#FAFAFA] flex-col gap-y-4 justify-center">
-          <div className="grid gap-y-4 xl:grid-cols-2">
+          <div className={`grid gap-y-4 ${listClassName}`}>
             <div className="flex flex-col gap-y-5">
               <div className="flexStart gap-x-2">
                 <div className="w-3 aspect-square rounded-[3px] bg-[#F68058]"></div>
@@ -73,7 +72,7 @@ const CashierPerformance = ({ className, graphClassName }) => {
         <div
           className={`${
             isSideBarOpen ? ` col-span-2 xl:col-span-1` : `col-span-1`
-          } flexCenter  h-full`}
+          } flexCenter  h-full ${graphClassName}`}
         >
           <ResponsiveContainer
             width="100%"
