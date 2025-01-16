@@ -1,7 +1,24 @@
 import React from "react";
 import { cardsData } from "../../../constants";
+import { useQuery } from "react-query";
+import { insight } from "../../../api/dashbaord";
 
 const TodayInsight = ({ className }) => {
+  const { data, isLoading } = useQuery("insight", insight);
+  const insightData = data?.data?.insight;
+
+  const formatAmount = (amount) => {
+    return Number(amount).toFixed(2);
+  };
+
+  if (isLoading) {
+    return (
+      <div
+        className={`lg:col-span-3 bg-[#0D0D0D] min-h-[280px] gap-y-6 flex flex-col
+        p-5 rounded-xl ${className}`}
+      ></div>
+    );
+  }
   return (
     <div
       className={`lg:col-span-3 bg-[#0D0D0D] gap-y-6 flex flex-col
@@ -39,7 +56,7 @@ const TodayInsight = ({ className }) => {
           >
             <img src={data.icon} alt="" className="w-8" />
             <span className="font-semibold text-[#9F9C9C] text-lg mt-1">
-              {data.amount}
+              {formatAmount(insightData[data.dataKey] || 0)}
             </span>
             <span className="font-medium text-[#9F9C9C]">{data.title}</span>
             <span className="font-light text-xs text-[#898384] -translate-y-[2px]">

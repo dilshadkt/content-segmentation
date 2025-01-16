@@ -1,31 +1,49 @@
-import React, { useState } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useFormik } from "formik";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
 import CustomeInput from "../../../components/shared/customeInput";
+import { useAuth } from "../../../hooks/UseAuth";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { values, errors, handleBlur, handleChange, touched, handleSubmit } =
-    useFormik({
-      initialValues: {
-        email: "",
-        password: "",
-        clientId: "",
-      },
-      validationSchema: Yup.object({
-        email: Yup.string()
-          .email("Invalid email address")
-          .required("E-mail is required"),
-        password: Yup.string()
-          .min(6, "Password must be atleast 6 characters")
-          .required("Password is required"),
-        clientId: Yup.string().required("Client id is required"),
-      }),
-      onSubmit: (values) => {
-        console.log("Form submited", values);
-      },
-    });
+  const { login } = useAuth();
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const {
+    values,
+    errors,
+    handleBlur,
+    handleChange,
+    touched,
+    handleSubmit,
+    isSubmitting,
+  } = useFormik({
+    initialValues: {
+      UserName: "",
+      password: "",
+      clientId: "",
+    },
+    validationSchema: Yup.object({
+      UserName: Yup.string()
+        .email("Invalid email address")
+        .required("E-mail is required"),
+      password: Yup.string()
+        .min(6, "Password must be atleast 6 characters")
+        .required("Password is required"),
+      clientId: Yup.string().required("Client id is required"),
+    }),
+    onSubmit: async (values) => {
+      try {
+        await login({ ...values });
+        navigate("/branches");
+      } catch (error) {
+        setError(error?.message || "Failed to Login");
+      }
+    },
+  });
+
   return (
     <section className="w-full h-full px-5 xl:px-16  flex flex-col  font-radio flexCenter relative">
       <div className="max-w-screen-xl w-full   md:grid grid-cols-2">
@@ -48,7 +66,7 @@ const Login = () => {
               errors={errors}
               handleBlur={handleBlur}
               handleChange={handleChange}
-              name={"email"}
+              name={"UserName"}
               touched={touched}
               values={values}
               placeholder={"Email"}
@@ -84,8 +102,14 @@ const Login = () => {
               values={values}
               placeholder={"Client Id"}
             />
-
-            <button className="p-3  mt-4 bg-black rounded-xl">Login</button>
+            {error && <p className="text-sm text-red-500">{error}</p>}
+            <button
+              disabled={isSubmitting}
+              type="submit"
+              className="p-3  mt-4 bg-black rounded-xl"
+            >
+              {isSubmitting ? "Loading..." : "Login"}
+            </button>
             <div className="flexCenter">
               <p className="text-xs text-center w-2/3 leading-5 ">
                 By continuing, you agree to (name)'s{" "}

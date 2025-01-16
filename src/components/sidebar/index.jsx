@@ -1,17 +1,19 @@
 import React from "react";
 import { menuItems } from "../../constants";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { UseCommon } from "../../hooks/UseCommon";
 
 const Sidebar = () => {
   const { isSideBarOpen, setSideBarOpen } = UseCommon();
+  const { branchName } = useParams();
+  const { pathname } = useLocation();
   return (
     <section
       className={`transition-all hidden md:flex duration-300
          bg-[#1A1A1A] h-full gap-y-8 py-6 
           justify-between flex-col ${
             isSideBarOpen
-              ? "translate-x-0 min-w-[280px] pl-6 pr-4"
+              ? "translate-x-0 min-w-[250px] pl-6 pr-4"
               : "-translate-x-full w-[0] pl-0 pr-0"
           }`}
     >
@@ -31,10 +33,16 @@ const Sidebar = () => {
         </div>
         <ul className="flex flex-col h-full overflow-y-auto gap-y-2 font-light mt-4">
           {menuItems.map((item) => (
-            <Link key={item.id} to={item.id !== 9 && item.path}>
+            <Link
+              key={item.id}
+              to={item.id !== 9 && `/${branchName}${item.path}`}
+            >
               <li
-                className="flexStart p-3 hover:bg-[#2F1B8C]
-              gap-x-4 cursor-pointer rounded-lg text-sm"
+                className={` ${
+                  pathname === `/${branchName}${item.path}` && `bg-[#2F1B8C]`
+                }
+                   flexStart p-3 hover:bg-[#2F1B8C]
+              gap-x-4 cursor-pointer rounded-lg text-sm`}
               >
                 <div>
                   <img src={`/icons/${item.icon}`} alt="" className="w-5" />

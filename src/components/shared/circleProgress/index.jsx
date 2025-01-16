@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const CircularProgress = ({
   currentValue = 0,
@@ -13,10 +14,12 @@ const CircularProgress = ({
   const circumference = radius * 2 * Math.PI;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
   const pathColor = currentValue >= target ? "#22c55e" : "#f11f1f";
+  const navigate = useNavigate();
 
   return (
     <div
-      className="w-full bg-gray-700/20 rounded-xl
+      onClick={() => navigate(`/abudhabi/reports`)}
+      className="w-full cursor-pointer bg-gray-700/20 rounded-xl
      backdrop-blur-md relative flexCenter flex-col py-14"
     >
       <span className="absolute top-3 left-4">

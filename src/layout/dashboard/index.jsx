@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../components/sidebar";
 import DashboardHeader from "../../components/header";
 import { Outlet } from "react-router-dom";
+import API from "../../api/httpService";
 
 const DashboardLayout = () => {
   return (

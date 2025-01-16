@@ -202,7 +202,7 @@ const InventorytReport = () => {
         <div
           className={`
         w-full grid ${
-          isSideBarOpen ? `2xl:grid-cols-2` : `grid-cols-2`
+          isSideBarOpen ? `2xl:grid-cols-2` : `md:grid-cols-2`
         }  gap-3`}
         >
           <div className=" md:h-[380px] grid grid-cols-3 gap-3">
@@ -234,7 +234,7 @@ const InventorytReport = () => {
         </div>
       </div>
       <div
-        className={`bg-[#0D0D0D] rounded-lg md:overflow-hidden ${
+        className={`bg-[#0D0D0D] rounded-lg lg:overflow-hidden ${
           isSideBarOpen
             ? ` col-span-1 lg:col-span-2 2xl:col-span-1`
             : `col-span-1`

@@ -45,7 +45,7 @@ export const menuItems = [
     id: 8,
     title: "Settings",
     icon: "settings.svg",
-    path: "/settings",
+    path: "/reports/settings",
   },
   {
     id: 9,
@@ -59,25 +59,25 @@ export const cardsData = [
   {
     id: 1,
     title: "Income",
-    amount: "30000.00",
+    dataKey: "income",
     description: "Based On Sales",
-    icon: "/icons/icome.svg", // Replace with the actual icon path
-    bgColor: "bg-[#2E00FF3D]/25", // Background color
+    icon: "/icons/icome.svg",
+    bgColor: "bg-[#2E00FF3D]/25",
   },
   {
     id: 2,
     title: "Expense",
-    amount: "14314.00",
+    dataKey: "expense",
     description: "+5% from yesterday",
-    icon: "/icons/expense.svg", // Replace with the actual icon path
-    bgColor: "bg-[#460068]", // Background color
+    icon: "/icons/expense.svg",
+    bgColor: "bg-[#460068]",
   },
   {
     id: 3,
     title: "Gross Profit",
-    amount: "30000.00",
+    dataKey: "grossProfit",
     description: "+1.2% from yesterday",
-    icon: "/icons/profit.svg", // Replace with the actual icon path
-    bgColor: "bg-[#033B00]", // Background color
+    icon: "/icons/profit.svg",
+    bgColor: "bg-[#033B00]",
   },
 ];

@@ -11,6 +11,8 @@ import {
 } from "recharts";
 import { UseCommon } from "../../../../hooks/UseCommon";
 import CloseIcon from "@mui/icons-material/Close";
+import { useQuery } from "react-query";
+import { totalRevenue } from "../../../../api/dashbaord";
 
 const data = [
   { name: "Monday", Expense: 14000, Sales: 12000 },
@@ -29,6 +31,10 @@ const TotalRevenueBarChart = ({ className, graphClassName }) => {
     setFullScreenGraph,
     setFullScreenModalOpen,
   } = UseCommon();
+
+  const { isLoading, data: revenue } = useQuery("totalRevenue", totalRevenue);
+  const revenueData = revenue?.data?.revenue;
+  console.log(revenueData);
   return (
     <section
       className={` ${

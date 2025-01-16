@@ -14,34 +14,52 @@ import Login from "./pages/auth/login";
 import HomeLayout from "./layout/home";
 import BranchesTarget from "./pages/braches";
 import TargetSettings from "./pages/target";
+import { AuthProvider } from "./context/auth";
+import { ProtectedRoute } from "./components/shared/protectedRoute";
 
 function App() {
   return (
     <>
-      <CommonProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/reports" element={<DashboardLayout />}>
-              <Route index element={<DashboardHome />} />
-              <Route path="salesman" element={<SalesManReport />} />
-              <Route path="cashier" element={<CashierReport />} />
-              <Route path="cashier" element={<CashierReport />} />
-              <Route path="counter" element={<CounterReport />} />
-              <Route path="department" element={<DepartmentReport />} />
-              <Route path="inventory" element={<InventorytReport />} />
-              <Route path="other" element={<OhtertReport />} />
-              <Route path="settings" element={<Settings />} />
-            </Route>
-            <Route path="/" element={<HomeLayout />}>
-              <Route path="branches" element={<BranchesTarget />} />
-              <Route path="targetSettings" element={<TargetSettings />} />
-            </Route>
-            <Route path="/auth" element={<AuthLayout />}>
-              <Route path="login" element={<Login />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </CommonProvider>
+      <AuthProvider>
+        <CommonProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route
+                path="/:branchName/reports"
+                element={
+                  <ProtectedRoute>
+                    <DashboardLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<DashboardHome />} />
+                <Route path="salesman" element={<SalesManReport />} />
+                <Route path="cashier" element={<CashierReport />} />
+                <Route path="cashier" element={<CashierReport />} />
+                <Route path="counter" element={<CounterReport />} />
+                <Route path="department" element={<DepartmentReport />} />
+                <Route path="inventory" element={<InventorytReport />} />
+                <Route path="other" element={<OhtertReport />} />
+                <Route path="settings" element={<Settings />} />
+              </Route>
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <HomeLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route path="branches" element={<BranchesTarget />} />
+                <Route path="targetSettings" element={<TargetSettings />} />
+              </Route>
+              <Route path="/auth" element={<AuthLayout />}>
+                <Route path="login" element={<Login />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </CommonProvider>
+      </AuthProvider>
     </>
   );
 }
