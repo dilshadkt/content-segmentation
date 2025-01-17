@@ -83,6 +83,7 @@ const Login = () => {
                   placeholder="Password"
                 />
                 <button
+                  type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-5 top-2"
                 >

@@ -56,7 +56,7 @@ const TodayInsight = ({ className }) => {
           >
             <img src={data.icon} alt="" className="w-8" />
             <span className="font-semibold text-[#9F9C9C] text-lg mt-1">
-              {formatAmount(insightData[data.dataKey] || 0)}
+              {formatAmount(insightData?.[data.dataKey] || 0)}
             </span>
             <span className="font-medium text-[#9F9C9C]">{data.title}</span>
             <span className="font-light text-xs text-[#898384] -translate-y-[2px]">

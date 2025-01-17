@@ -34,7 +34,6 @@ const TotalRevenueBarChart = ({ className, graphClassName }) => {
 
   const { isLoading, data: revenue } = useQuery("totalRevenue", totalRevenue);
   const revenueData = revenue?.data?.revenue;
-  console.log(revenueData);
   return (
     <section
       className={` ${

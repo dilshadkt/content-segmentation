@@ -23,7 +23,7 @@ const DashboardHeader = () => {
         </div>
         {!isSideBarOpen && (
           <button
-            className="absolute top-0 bottom-0 my-auto left-0"
+            className="absolute hidden md:block  top-0 bottom-0 my-auto left-0"
             onClick={() => setSideBarOpen(true)}
           >
             <DehazeIcon />

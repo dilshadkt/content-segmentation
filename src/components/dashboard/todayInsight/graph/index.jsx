@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import {
   LineChart,
   Line,
@@ -56,6 +56,11 @@ const TodayInsightGraph = ({ className = "", graphClassName = "" }) => {
     { month: 3, revenue: 4000, profit: 1040, expenses: 1800 },
     { month: 4, revenue: 4000, profit: 5000, expenses: 5000 },
     { month: 5, revenue: 4500, profit: 1040, expenses: 1800 },
+    { month: 6, revenue: 0, profit: 500, expenses: 20 },
+    { month: 7, revenue: 1500, profit: 1500, expenses: 1500 },
+    { month: 8, revenue: 4000, profit: 1040, expenses: 1800 },
+    { month: 9, revenue: 4000, profit: 5000, expenses: 5000 },
+    { month: 10, revenue: 4500, profit: 1040, expenses: 1800 },
   ];
 
   return (

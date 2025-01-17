@@ -3,6 +3,7 @@ import Sidebar from "../../components/sidebar";
 import DashboardHeader from "../../components/header";
 import { Outlet } from "react-router-dom";
 import API from "../../api/httpService";
+import MobileFloatingMenu from "../../components/sideMenu";
 
 const DashboardLayout = () => {
   return (
@@ -13,6 +14,8 @@ const DashboardLayout = () => {
         <div className="h-full w-full  pb-4 md:pb-7 pt-4 px-2 md:px-5 overflow-y-auto">
           <Outlet />
         </div>
+        {/* mobile naviagation bar  */}
+        <MobileFloatingMenu />
       </div>
     </main>
   );

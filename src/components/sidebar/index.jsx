@@ -41,10 +41,10 @@ const Sidebar = () => {
                 className={` ${
                   pathname === `/${branchName}${item.path}` && `bg-[#2F1B8C]`
                 }
-                   flexStart p-3 hover:bg-[#2F1B8C]
+               group     flexStart p-3 hover:bg-[#2F1B8C]
               gap-x-4 cursor-pointer rounded-lg text-sm`}
               >
-                <div>
+                <div className="group-hover:-translate-x-1 transition-all duration-300">
                   <img src={`/icons/${item.icon}`} alt="" className="w-5" />
                 </div>
                 {item.title}
