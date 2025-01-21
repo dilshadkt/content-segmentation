@@ -15,7 +15,7 @@ import HomeLayout from "./layout/home";
 import BranchesTarget from "./pages/braches";
 import TargetSettings from "./pages/target";
 import { AuthProvider } from "./context/auth";
-import { ProtectedRoute } from "./components/shared/protectedRoute";
+import { ProtectedRoute } from "./router/protectedRoute";
 
 function App() {
   return (

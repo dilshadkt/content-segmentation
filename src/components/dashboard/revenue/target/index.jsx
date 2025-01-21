@@ -11,24 +11,36 @@ import {
 } from "recharts";
 import { UseCommon } from "../../../../hooks/UseCommon";
 import CloseIcon from "@mui/icons-material/Close";
-
-const data = [
-  { name: "Jan", Expense: 14000, Sales: 12000 },
-  { name: "Feb", Expense: 16000, Sales: 18000 },
-  { name: "Mar", Expense: 19000, Sales: 21000 },
-  { name: "Apr", Expense: 12000, Sales: 16000 },
-  { name: "May", Expense: 15000, Sales: 13000 },
-  { name: "June", Expense: 12000, Sales: 15000 },
-  { name: "July", Expense: 18000, Sales: 20000 },
-];
+import { useQuery } from "react-query";
+import { targetVsReality } from "../../../../api/dashbaord";
+import NoDataLoading from "../../../shared/loading";
 
 const TargetVsReality = ({ className, graphClassName }) => {
+  const { data, isLoading, isError } = useQuery(
+    "targetVsReality",
+    targetVsReality,
+    {
+      select: (data) => data?.data?.salesData,
+    }
+  );
   const {
     isSideBarOpen,
     isFullScreenModalOpen,
     setFullScreenModalOpen,
     setFullScreenGraph,
   } = UseCommon();
+  if (isLoading || isError) {
+    return (
+      <NoDataLoading
+        isError={isError}
+        className={`${
+          isSideBarOpen
+            ? `col-span-1 2xl:col-span-2`
+            : ` lg:h-full lg:col-span-2`
+        } h-[290px]  `}
+      />
+    );
+  }
   return (
     <section
       className={` ${
@@ -62,7 +74,7 @@ const TargetVsReality = ({ className, graphClassName }) => {
               }}
             >
               <XAxis
-                dataKey="name"
+                dataKey="Name"
                 axisLine={false}
                 tickLine={false}
                 fontSize={12}
@@ -75,13 +87,13 @@ const TargetVsReality = ({ className, graphClassName }) => {
               />
               <CartesianGrid vertical={false} horizontal stroke="#1B1B1B" />
               <Bar
-                dataKey="Expense"
+                dataKey="Reality Sales"
                 fill="#34C759"
                 barSize={12}
                 radius={[3, 3, 3, 3]}
               />
               <Bar
-                dataKey="Sales"
+                dataKey="Target Sales"
                 fill="#007AFF"
                 barSize={12}
                 radius={[3, 3, 3, 3]}

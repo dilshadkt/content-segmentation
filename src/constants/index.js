@@ -59,7 +59,7 @@ export const cardsData = [
   {
     id: 1,
     title: "Income",
-    dataKey: "income",
+    dataKey: "Income",
     description: "Based On Sales",
     icon: "/icons/icome.svg",
     bgColor: "bg-[#2E00FF3D]/25",
@@ -67,7 +67,7 @@ export const cardsData = [
   {
     id: 2,
     title: "Expense",
-    dataKey: "expense",
+    dataKey: "Expense",
     description: "+5% from yesterday",
     icon: "/icons/expense.svg",
     bgColor: "bg-[#460068]",
@@ -75,9 +75,58 @@ export const cardsData = [
   {
     id: 3,
     title: "Gross Profit",
-    dataKey: "grossProfit",
+    dataKey: "GP",
     description: "+1.2% from yesterday",
     icon: "/icons/profit.svg",
     bgColor: "bg-[#033B00]",
   },
+];
+
+export const DEPARTMENT_HEADER = [
+  {
+    id: 1,
+    title: "Department",
+    color: "#ffffff",
+  },
+  {
+    id: 2,
+    title: "Category",
+    color: "#F77300",
+  },
+  {
+    id: 3,
+    title: "Sub Categories",
+    color: "#F70031",
+  },
+  {
+    id: 4,
+    title: "Department",
+    color: "#E622FF",
+  },
+];
+
+export const OTHER_REPORTS = [
+  { id: 1, title: "Sales", path: "/" },
+  { id: 2, title: "Sales return", path: "/" },
+  { id: 3, title: "Purchase", path: "/" },
+  { id: 4, title: "Purchase return", path: "/" },
+  { id: 5, title: "Accounts", path: "/" },
+];
+
+export const SELLING_ITEMS_COLOR = [
+  { activeColor: "#1A9FFF", backgroundColor: "#00274B" },
+  {
+    activeColor: "#2ECC71",
+    backgroundColor: "#1C583C",
+  },
+  {
+    activeColor: "#9967FF",
+    backgroundColor: "#250070",
+  },
+  {
+    activeColor: "#FF9A26",
+    backgroundColor: "#753E00",
+  },
+  ,
+  ,
 ];

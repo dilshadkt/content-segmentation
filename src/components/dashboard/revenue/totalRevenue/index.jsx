@@ -1,28 +1,18 @@
+import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
+import { useQuery } from "react-query";
 import {
-  BarChart,
   Bar,
-  XAxis,
-  YAxis,
+  BarChart,
   CartesianGrid,
-  Tooltip,
   Legend,
   ResponsiveContainer,
+  XAxis,
+  YAxis,
 } from "recharts";
-import { UseCommon } from "../../../../hooks/UseCommon";
-import CloseIcon from "@mui/icons-material/Close";
-import { useQuery } from "react-query";
 import { totalRevenue } from "../../../../api/dashbaord";
-
-const data = [
-  { name: "Monday", Expense: 14000, Sales: 12000 },
-  { name: "Tuesday", Expense: 16000, Sales: 18000 },
-  { name: "Wednesday", Expense: 19000, Sales: 21000 },
-  { name: "Thursday", Expense: 12000, Sales: 16000 },
-  { name: "Friday", Expense: 15000, Sales: 13000 },
-  { name: "Saturday", Expense: 12000, Sales: 15000 },
-  { name: "Sunday", Expense: 18000, Sales: 20000 },
-];
+import { UseCommon } from "../../../../hooks/UseCommon";
+import NoDataLoading from "../../../shared/loading";
 
 const TotalRevenueBarChart = ({ className, graphClassName }) => {
   const {
@@ -32,8 +22,22 @@ const TotalRevenueBarChart = ({ className, graphClassName }) => {
     setFullScreenModalOpen,
   } = UseCommon();
 
-  const { isLoading, data: revenue } = useQuery("totalRevenue", totalRevenue);
-  const revenueData = revenue?.data?.revenue;
+  const { isLoading, data, isError } = useQuery("totalRevenue", totalRevenue, {
+    select: (data) => data?.data?.revenue,
+  });
+  const revenueData = data;
+  if (isLoading || isError) {
+    return (
+      <NoDataLoading
+        className={`${
+          isSideBarOpen
+            ? `col-span-1 2xl:col-span-3`
+            : ` lg:h-full lg:col-span-3`
+        } h-[290px]  `}
+      />
+    );
+  }
+
   return (
     <section
       className={` ${
@@ -51,9 +55,9 @@ const TotalRevenueBarChart = ({ className, graphClassName }) => {
       <div className={` h-[190px] w-full ${graphClassName}`}>
         <ResponsiveContainer height="100%">
           <BarChart
-            data={data}
+            data={revenueData}
             margin={{
-              left: -22,
+              left: -6,
               bottom: -12,
             }}
           >

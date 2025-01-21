@@ -1,6 +1,8 @@
 import React from "react";
 import { UseCommon } from "../../../../hooks/UseCommon";
 import CloseIcon from "@mui/icons-material/Close";
+import { useQuery } from "react-query";
+import { topSellingBranches } from "../../../../api/dashbaord";
 
 const TopSellingBranches = ({ className }) => {
   const {
@@ -9,6 +11,7 @@ const TopSellingBranches = ({ className }) => {
     setFullScreenGraph,
     setFullScreenModalOpen,
   } = UseCommon();
+  const { data: dummy } = useQuery("topSellingBranches", topSellingBranches);
   const data = [
     {
       name: "Al Hamdan",

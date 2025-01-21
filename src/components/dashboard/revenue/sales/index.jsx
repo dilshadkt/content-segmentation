@@ -11,24 +11,33 @@ import {
 } from "recharts";
 import { UseCommon } from "../../../../hooks/UseCommon";
 import CloseIcon from "@mui/icons-material/Close";
-
-const data = [
-  { name: "Mon", "Last Week": 3004, "This Week": 4504 },
-  { name: "Tue", "Last Week": 3650, "This Week": 4400 },
-  { name: "Wed", "Last Week": 3500, "This Week": 5100 },
-  { name: "Thu", "Last Week": 2800, "This Week": 3800 },
-  { name: "Fri", "Last Week": 3200, "This Week": 4200 },
-  { name: "Sat", "Last Week": 3100, "This Week": 4600 },
-  { name: "Sun", "Last Week": 3800, "This Week": 5200 },
-];
+import { useQuery } from "react-query";
+import { totalSales } from "../../../../api/dashbaord";
+import NoDataLoading from "../../../shared/loading";
 
 const SalesAreaChart = ({ className, graphClassName }) => {
+  const { data, isLoading, isError } = useQuery("saleData", totalSales);
+  const salesData = data?.data?.salesData;
+
   const {
     isSideBarOpen,
     isFullScreenModalOpen,
     setFullScreenGraph,
     setFullScreenModalOpen,
   } = UseCommon();
+
+  if (isLoading || isError) {
+    return (
+      <NoDataLoading
+        isError={isError}
+        className={`${
+          isSideBarOpen
+            ? `col-span-1 2xl:col-span-2`
+            : `lg:h-full lg:col-span-2 `
+        }  h-[290px] `}
+      />
+    );
+  }
   return (
     <section
       className={` ${
@@ -47,7 +56,7 @@ const SalesAreaChart = ({ className, graphClassName }) => {
       <div className={`w-full relative h-[190px] ${graphClassName}`}>
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
-            data={data}
+            data={salesData}
             margin={{
               left: -52,
               right: -8,
@@ -67,7 +76,7 @@ const SalesAreaChart = ({ className, graphClassName }) => {
             </defs>
             {/* Axes */}
             <XAxis
-              dataKey="name"
+              dataKey="Name "
               tickLine={false}
               axisLine={false}
               tick={false}

@@ -10,11 +10,9 @@ import {
 } from "recharts";
 import { UseCommon } from "../../../../hooks/UseCommon";
 import CloseIcon from "@mui/icons-material/Close";
-
-const data = [
-  { name: "Moving Items", value: 80 },
-  { name: "Slow Moving", value: 20 },
-];
+import { useQuery } from "react-query";
+import { productMovement } from "../../../../api/dashbaord";
+import NoDataLoading from "../../../shared/loading";
 
 const COLORS = ["#9789FF", "#37F4E8"];
 
@@ -25,6 +23,24 @@ const ProductMovement = ({ className, graphClassName }) => {
     setFullScreenModalOpen,
     setFullScreenGraph,
   } = UseCommon();
+  const { data, isLoading, isError } = useQuery(
+    "productMovement",
+    productMovement,
+    {
+      select: (data) => data?.data?.salesData,
+    }
+  );
+  if (isLoading || isError) {
+    return (
+      <NoDataLoading
+        isError={isError}
+        className={`${
+          isSideBarOpen ? `col-span-1 2xl:col-span-2` : `lg:col-span-2`
+        }`}
+      />
+    );
+  }
+
   return (
     <section
       className={` ${
@@ -50,19 +66,19 @@ const ProductMovement = ({ className, graphClassName }) => {
               data={data}
               innerRadius={isFullScreenModalOpen ? 58 : 48}
               outerRadius={isFullScreenModalOpen ? 95 : 85}
-              dataKey="value"
+              dataKey="Percentage"
               paddingAngle={4}
               stroke="none"
               cornerRadius={7}
             >
-              {data.map((entry, index) => (
+              {data?.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index]}
                   filter={`drop-shadow(0 0 3px ${COLORS[index]})`}
                 >
                   <Label
-                    value={entry.value.toLocaleString()}
+                    value={entry.Percentage.toLocaleString()}
                     position="center"
                     fill="#fff"
                     style={{
@@ -83,7 +99,7 @@ const ProductMovement = ({ className, graphClassName }) => {
               />
               <Label
                 value={data
-                  .reduce((sum, entry) => sum + entry.value, 0)
+                  ?.reduce((sum, entry) => sum + entry.Percentage, 0)
                   .toLocaleString()}
                 position="center"
                 dy={20}
@@ -94,7 +110,7 @@ const ProductMovement = ({ className, graphClassName }) => {
                 }}
               />
               <LabelList
-                dataKey="value"
+                dataKey="Percentage"
                 position="inside"
                 fill="#fff"
                 formatter={(value) => `${value.toLocaleString()}%`}
@@ -107,22 +123,18 @@ const ProductMovement = ({ className, graphClassName }) => {
             <Tooltip />
           </PieChart>
         </ResponsiveContainer>
-        <div className=" flexCenter">
-          <div className="flexStart gap-x-3">
-            <div className="w-2 h-2 rounded-full bg-[#6F57DE]"></div>
-            <div className="flex flex-col">
-              <span className="text-sm">Moving Items</span>
-              <span className="text-xs text-[#6F57DE]">11400</span>
+        <div className=" flexCenter gap-x-6">
+          {data?.map((item, index) => (
+            <div className="flexStart gap-x-3">
+              <div className="w-2 h-2 rounded-full bg-[#6F57DE]"></div>
+              <div className="flex flex-col">
+                <span className="text-sm">{item?.MovementCategory}</span>
+                <span className="text-xs text-[#6F57DE]">
+                  {item?.ItemCount}
+                </span>
+              </div>
             </div>
-          </div>
-          <hr className="w-5  rotate-90 ml-3 mr-2" />
-          <div className="flexStart gap-x-3">
-            <div className="w-2 h-2 rounded-full bg-[#00C7BE]"></div>
-            <div className="flex flex-col">
-              <span className="text-sm">Moving Items</span>
-              <span className="text-xs text-[#00C7BE]">11400</span>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
       {!isFullScreenModalOpen && (

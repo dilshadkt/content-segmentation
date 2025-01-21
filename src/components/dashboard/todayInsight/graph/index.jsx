@@ -9,6 +9,9 @@ import {
 } from "recharts";
 import { UseCommon } from "../../../../hooks/UseCommon";
 import CloseIcon from "@mui/icons-material/Close";
+import { useQuery } from "react-query";
+import { insightGraph } from "../../../../api/dashbaord";
+import NoDataLoading from "../../../shared/loading";
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload?.length) {
     return (
@@ -49,19 +52,21 @@ const TodayInsightGraph = ({ className = "", graphClassName = "" }) => {
   const [hoveredLine, setHoveredLine] = useState(null);
   const { setFullScreenModalOpen, isFullScreenModalOpen, setGraph } =
     UseCommon();
-
-  const data = [
-    { month: 1, revenue: 0, profit: 500, expenses: 20 },
-    { month: 2, revenue: 1500, profit: 1500, expenses: 1500 },
-    { month: 3, revenue: 4000, profit: 1040, expenses: 1800 },
-    { month: 4, revenue: 4000, profit: 5000, expenses: 5000 },
-    { month: 5, revenue: 4500, profit: 1040, expenses: 1800 },
-    { month: 6, revenue: 0, profit: 500, expenses: 20 },
-    { month: 7, revenue: 1500, profit: 1500, expenses: 1500 },
-    { month: 8, revenue: 4000, profit: 1040, expenses: 1800 },
-    { month: 9, revenue: 4000, profit: 5000, expenses: 5000 },
-    { month: 10, revenue: 4500, profit: 1040, expenses: 1800 },
-  ];
+  const { data, isLoading, isError } = useQuery("insightGraph", insightGraph, {
+    select: (data) =>
+      data?.data?.insight?.map((item) => ({
+        ...item,
+        Date: item?.Date?.split("/")[0],
+      })),
+  });
+  if (isLoading || isError) {
+    return (
+      <NoDataLoading
+        isError={isError}
+        className="h-[290px] col-span-1 lg:col-span-2"
+      />
+    );
+  }
 
   return (
     <section
@@ -86,7 +91,7 @@ const TodayInsightGraph = ({ className = "", graphClassName = "" }) => {
           >
             <XAxis
               fontSize={12}
-              dataKey="month"
+              dataKey="Date"
               stroke="#59588D"
               axisLine={false}
               tickLine={false}
@@ -111,7 +116,7 @@ const TodayInsightGraph = ({ className = "", graphClassName = "" }) => {
             {/* Revenue Line */}
             <Line
               type="monotone"
-              dataKey="revenue"
+              dataKey="Revenue"
               stroke="#4229B4"
               strokeWidth={hoveredLine === "revenue" ? 3 : 1.4}
               dot={false}
@@ -129,7 +134,7 @@ const TodayInsightGraph = ({ className = "", graphClassName = "" }) => {
             {/* Profit Line */}
             <Line
               type="monotone"
-              dataKey="profit"
+              dataKey="Profit"
               stroke="#8C22C0"
               strokeWidth={hoveredLine === "profit" ? 3 : 1.4}
               dot={false}
@@ -147,7 +152,7 @@ const TodayInsightGraph = ({ className = "", graphClassName = "" }) => {
             {/* Expenses Line */}
             <Line
               type="monotone"
-              dataKey="expenses"
+              dataKey="Expenses"
               stroke="#0B8C04"
               strokeWidth={hoveredLine === "expenses" ? 3 : 1.4}
               dot={false}

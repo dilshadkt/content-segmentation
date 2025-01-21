@@ -1,22 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { cardsData } from "../../../constants";
 import { useQuery } from "react-query";
 import { insight } from "../../../api/dashbaord";
+import NoDataLoading from "../../shared/loading";
 
 const TodayInsight = ({ className }) => {
-  const { data, isLoading } = useQuery("insight", insight);
-  const insightData = data?.data?.insight;
+  const today = new Date();
+  const formattedDate = today.toISOString().split("T")[0];
+  const [selectedData, setSelectedData] = useState({
+    fromDate: formattedDate,
+    toDate: formattedDate,
+  });
+  const { data, isLoading, isError } = useQuery(
+    ["insight", selectedData],
+    () => insight(selectedData),
+    {
+      select: (data) => data?.data?.insight?.[0],
+    }
+  );
+
+  const insightData = data;
 
   const formatAmount = (amount) => {
     return Number(amount).toFixed(2);
   };
 
-  if (isLoading) {
+  if (isLoading || isError) {
     return (
-      <div
-        className={`lg:col-span-3 bg-[#0D0D0D] min-h-[280px] gap-y-6 flex flex-col
-        p-5 rounded-xl ${className}`}
-      ></div>
+      <NoDataLoading
+        isError={isError}
+        className="min-h-[280px] lg:col-span-3"
+      />
     );
   }
   return (
