@@ -29,20 +29,20 @@ export const insightGraph = async ({ fromDate, toDate }) => {
   return data;
 };
 
-export const totalRevenue = async () => {
+export const totalRevenue = async ({ from, to }) => {
   const { data } = await API.get(TOTAL_REVENUE, {
     headers: {
-      fromDate: "2024-01-01",
-      toDate: "2025-01-01",
+      fromDate: from,
+      toDate: to,
     },
   });
   return data;
 };
-export const totalSales = async () => {
+export const totalSales = async ({ from, to }) => {
   const { data } = await API.get(TOTAL_SALES, {
     headers: {
-      fromDate: "2024-01-01",
-      toDate: "2025-01-01",
+      fromDate: from,
+      toDate: to,
     },
   });
   return data;

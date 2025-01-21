@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AreaChart,
   Area,
@@ -14,10 +14,21 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useQuery } from "react-query";
 import { totalSales } from "../../../../api/dashbaord";
 import NoDataLoading from "../../../shared/loading";
+import { getFormattedDate } from "../../../../lib/GetFormatedDate";
+import DateSelector from "../../../shared/datePicker";
 
-const SalesAreaChart = ({ className, graphClassName }) => {
-  const { data, isLoading, isError } = useQuery("saleData", totalSales);
-  const salesData = data?.data?.salesData;
+const SalesAreaChart = ({ className, graphClassName, initialDate }) => {
+  const [date, setDate] = useState({
+    from: initialDate?.from || getFormattedDate(0),
+    to: initialDate?.to || getFormattedDate(0),
+  });
+  const {
+    data: salesData,
+    isLoading,
+    isError,
+  } = useQuery(["saleData", date], () => totalSales(date), {
+    select: (data) => data?.data?.salesData,
+  });
 
   const {
     isSideBarOpen,
@@ -45,14 +56,6 @@ const SalesAreaChart = ({ className, graphClassName }) => {
       }  h-[290px]  flex items-end justify-start 
     overflow-hidden bg-[#0D0D0D] rounded-xl py-5 px-4 relative ${className}`}
     >
-      {" "}
-      {isFullScreenModalOpen && (
-        <div className="top-4  right-5 absolute flexEnd">
-          <button onClick={() => setFullScreenModalOpen(false)}>
-            <CloseIcon className="text-white/45" />
-          </button>
-        </div>
-      )}
       <div className={`w-full relative h-[190px] ${graphClassName}`}>
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
@@ -105,29 +108,33 @@ const SalesAreaChart = ({ className, graphClassName }) => {
           </AreaChart>
         </ResponsiveContainer>
       </div>
-      {!isFullScreenModalOpen && (
-        <div className="absolute top-4  flexBetween  left-0 pl-7 pr-5 right-0 w-full ">
-          <span className="text-[#9F9C9C] font-semibold">Sales </span>
-          <div className="flexEnd gap-x-4">
-            <button className="flexStart gap-x-2">
-              <span>Select Week</span>
-              <img src="/icons/arrowDown.svg" alt="" className="w-2" />
-            </button>
+      {/* {!isFullScreenModalOpen && ( */}
+      <div className="absolute top-4  flexBetween  left-0 pl-7 pr-5 right-0 w-full ">
+        <span className="text-[#9F9C9C] font-semibold">Sales </span>
+        <div className="flexEnd gap-x-4">
+          <DateSelector setDate={setDate} initialDate={date} />
+          {!isFullScreenModalOpen ? (
             <button
               onClick={() =>
                 setFullScreenGraph(
                   <SalesAreaChart
                     className={` w-[96%] md:w-[80%]  h-fit md:h-[65%]`}
                     graphClassName={` h-[230px] md:h-[400px]`}
+                    initialDate={date}
                   />
                 )
               }
             >
               <img src="/icons/fullView.svg" alt="" className="w-3" />
             </button>
-          </div>
+          ) : (
+            <button onClick={() => setFullScreenModalOpen(false)}>
+              <CloseIcon className="text-white/45" />
+            </button>
+          )}
         </div>
-      )}
+      </div>
+      {/* )} */}
     </section>
   );
 };

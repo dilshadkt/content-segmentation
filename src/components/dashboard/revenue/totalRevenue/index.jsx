@@ -1,5 +1,5 @@
 import CloseIcon from "@mui/icons-material/Close";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import {
   Bar,
@@ -13,19 +13,39 @@ import {
 import { totalRevenue } from "../../../../api/dashbaord";
 import { UseCommon } from "../../../../hooks/UseCommon";
 import NoDataLoading from "../../../shared/loading";
+import CustomLegend from "./customeLegend";
+import DateSelector from "../../../shared/datePicker";
+import { getFormattedDate } from "../../../../lib/GetFormatedDate";
 
-const TotalRevenueBarChart = ({ className, graphClassName }) => {
+const TotalRevenueBarChart = ({ className, graphClassName, initialDate }) => {
   const {
     isSideBarOpen,
     isFullScreenModalOpen,
     setFullScreenGraph,
     setFullScreenModalOpen,
   } = UseCommon();
-
-  const { isLoading, data, isError } = useQuery("totalRevenue", totalRevenue, {
-    select: (data) => data?.data?.revenue,
+  const [date, setDate] = useState({
+    from: initialDate?.from || getFormattedDate(0),
+    to: initialDate?.to || getFormattedDate(0),
   });
+  const { isLoading, data, isError } = useQuery(
+    ["totalRevenue", date],
+    () => totalRevenue(date),
+    {
+      select: (data) => data?.data?.revenue,
+    }
+  );
   const revenueData = data;
+
+  //  calculating for better ui experince in the graph
+  const largestValue = useMemo(() => {
+    return (
+      data
+        ?.reduce((max, item) => Math.max(max, item.Sales, item.Expense), 0)
+        ?.toString() || 0
+    );
+  }, [data]);
+
   if (isLoading || isError) {
     return (
       <NoDataLoading
@@ -33,11 +53,10 @@ const TotalRevenueBarChart = ({ className, graphClassName }) => {
           isSideBarOpen
             ? `col-span-1 2xl:col-span-3`
             : ` lg:h-full lg:col-span-3`
-        } h-[290px]  `}
+        } h-[290px] w-full `}
       />
     );
   }
-
   return (
     <section
       className={` ${
@@ -45,19 +64,17 @@ const TotalRevenueBarChart = ({ className, graphClassName }) => {
       } h-[290px]  
      relative flex items-end justify-start bg-[#0D0D0D] rounded-xl p-6 ${className}`}
     >
-      {isFullScreenModalOpen && (
-        <div className="w-full absolute top-4 right-5 flexEnd">
-          <button onClick={() => setFullScreenModalOpen(false)}>
-            <CloseIcon className="text-white/45" />
-          </button>
-        </div>
-      )}
       <div className={` h-[190px] w-full ${graphClassName}`}>
         <ResponsiveContainer height="100%">
           <BarChart
             data={revenueData}
             margin={{
-              left: -6,
+              left:
+                largestValue?.length > 5
+                  ? -2
+                  : largestValue.length > 3
+                  ? -10
+                  : -26,
               bottom: -12,
             }}
           >
@@ -77,71 +94,35 @@ const TotalRevenueBarChart = ({ className, graphClassName }) => {
         </ResponsiveContainer>
       </div>
 
-      {!isFullScreenModalOpen && (
-        <div className="absolute top-4  flexBetween  left-0 pl-7 pr-5 right-0 w-full ">
-          <span className="text-[#9F9C9C] font-semibold">Total Revenue</span>
-          <div className="flexEnd gap-x-4">
-            <button className="flexStart gap-x-2">
-              <span>Week</span>
-              <img src="/icons/arrowDown.svg" alt="" className="w-2" />
-            </button>
+      {/* {!isFullScreenModalOpen && ( */}
+      <div className="absolute top-4  flexBetween  left-0 pl-7 pr-5 right-0 w-full ">
+        <span className="text-[#9F9C9C] font-semibold">Total Revenue</span>
+        <div className="flexEnd gap-x-4 ">
+          <DateSelector setDate={setDate} initialDate={date} />
+          {!isFullScreenModalOpen ? (
             <button
               onClick={() =>
                 setFullScreenGraph(
                   <TotalRevenueBarChart
                     className={" w-[96%] md:w-full h-fit   md:h-full"}
                     graphClassName={" h-[230px] md:h-[400px]"}
+                    initialDate={date}
                   />
                 )
               }
             >
               <img src="/icons/fullView.svg" alt="" className="w-3" />
             </button>
-          </div>
+          ) : (
+            <div className="w-full ">
+              <button onClick={() => setFullScreenModalOpen(false)}>
+                <CloseIcon className="text-white/45" />
+              </button>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </section>
-  );
-};
-
-const CustomLegend = (props) => {
-  const { payload } = props; // `payload` contains the legend items
-
-  return (
-    <ul
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        listStyle: "none",
-        padding: 0,
-      }}
-    >
-      {payload.map((entry, index) => (
-        <li
-          key={`legend-item-${index}`}
-          style={{
-            marginRight: 20,
-            display: "flex",
-            alignItems: "center",
-            fontSize: "14px",
-            color: entry.color,
-          }}
-        >
-          {/* Square color indicator */}
-          <div
-            style={{
-              width: 8,
-              height: 8,
-              backgroundColor: entry.color,
-              borderRadius: "100%",
-              marginRight: 8,
-            }}
-          ></div>
-          {entry.value} {/* Legend text */}
-        </li>
-      ))}
-    </ul>
   );
 };
 

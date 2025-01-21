@@ -55,7 +55,7 @@ const ProductMovement = ({ className, graphClassName }) => {
         </div>
       )}
       <div
-        className={`relative flex flex-col h-[250px] md:h-full gap-y-2 mt-6`}
+        className={`relative flex flex-col h-[270px] mb-4 md:h-full gap-y-2 mt-6`}
       >
         <ResponsiveContainer
           width="100%"
@@ -123,9 +123,9 @@ const ProductMovement = ({ className, graphClassName }) => {
             <Tooltip />
           </PieChart>
         </ResponsiveContainer>
-        <div className=" flexCenter gap-x-6">
+        <div className=" flexCenter absolute -bottom-4 left-0 right-0 mx-auto gap-x-6">
           {data?.map((item, index) => (
-            <div className="flexStart gap-x-3">
+            <div key={index} className="flexStart gap-x-3">
               <div className="w-2 h-2 rounded-full bg-[#6F57DE]"></div>
               <div className="flex flex-col">
                 <span className="text-sm">{item?.MovementCategory}</span>

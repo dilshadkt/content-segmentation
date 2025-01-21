@@ -130,3 +130,17 @@ export const SELLING_ITEMS_COLOR = [
   ,
   ,
 ];
+
+export const DATE_OPTIONS = [
+  "Today",
+  "This Week",
+  "This Month",
+  "This Quarter",
+  "This Year",
+  "Yesterday",
+  "Previous Week",
+  "Previous Month",
+  "Previous Quarter",
+  "Previous Year",
+  "Custom",
+];
