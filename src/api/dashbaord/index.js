@@ -19,11 +19,11 @@ export const insight = async ({ fromDate, toDate }) => {
   });
   return data;
 };
-export const insightGraph = async ({ fromDate, toDate }) => {
+export const insightGraph = async ({ from, to }) => {
   const { data } = await API.get(TODAY_INSIGHT_GAPH, {
     headers: {
-      fromDate: "2019-01-01",
-      toDate: "2019-01-10",
+      fromDate: from,
+      toDate: to,
     },
   });
   return data;
@@ -47,20 +47,20 @@ export const totalSales = async ({ from, to }) => {
   });
   return data;
 };
-export const targetVsReality = async () => {
+export const targetVsReality = async ({ from, to }) => {
   const { data } = await API.get(TARGET_VS_REALITY, {
     headers: {
-      fromDate: "2019-01-01",
-      toDate: "2020-01-01",
+      fromDate: from,
+      toDate: to,
     },
   });
   return data;
 };
-export const topSellingDepartment = async () => {
+export const topSellingDepartment = async ({ from, to }) => {
   const { data } = await API.get(TOP_SELLING_DEPARTMENT, {
     headers: {
-      fromDate: "2019-01-01",
-      toDate: "2020-01-01",
+      fromDate: from,
+      toDate: to,
     },
   });
   return data;
@@ -74,11 +74,11 @@ export const topSellingBranches = async () => {
   });
   return data;
 };
-export const productMovement = async () => {
+export const productMovement = async ({ from, to }) => {
   const { data } = await API.get(PRODUCT_MOVEMENT, {
     headers: {
-      fromDate: "2019-01-01",
-      toDate: "2020-01-01",
+      fromDate: from,
+      toDate: to,
     },
   });
   return data;

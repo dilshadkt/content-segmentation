@@ -1,17 +1,23 @@
 import CloseIcon from "@mui/icons-material/Close";
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { topSellingDepartment } from "../../../../api/dashbaord";
 import { UseCommon } from "../../../../hooks/UseCommon";
 import { getColor } from "../../../../lib/GetColor";
 import NoDataLoading from "../../../shared/loading";
+import { getFormattedDate } from "../../../../lib/GetFormatedDate";
+import DateSelector from "../../../shared/datePicker";
 
-const TopSelling = ({ className, graphClassName }) => {
+const TopSelling = ({ className, graphClassName, initialDate }) => {
+  const [date, setDate] = useState({
+    from: initialDate?.from || getFormattedDate(0),
+    to: initialDate?.to || getFormattedDate(0),
+  });
   const { isFullScreenModalOpen, setFullScreenGraph, setFullScreenModalOpen } =
     UseCommon();
   const { data, isLoading, isError } = useQuery(
-    "topSellingDepartment",
-    topSellingDepartment,
+    ["topSellingDepartment", date],
+    () => topSellingDepartment(date),
     {
       select: (data) => data?.data?.salesData,
     }
@@ -23,13 +29,6 @@ const TopSelling = ({ className, graphClassName }) => {
     <section
       className={` flex felx-col  bg-[#0D0D0D] h-full  relative rounded-xl ${className}`}
     >
-      {isFullScreenModalOpen && (
-        <div className="w-full absolute top-4 right-5 mb-5 flexEnd">
-          <button onClick={() => setFullScreenModalOpen(false)}>
-            <CloseIcon className="text-white/45" />
-          </button>
-        </div>
-      )}
       <div className="w-full   mt-12 ">
         <table className="w-full">
           <thead className="border-b border-[#1A1A1A] text-[#B5B3B3]">
@@ -83,30 +82,32 @@ const TopSelling = ({ className, graphClassName }) => {
           </tbody>
         </table>
       </div>
-      {!isFullScreenModalOpen && (
-        <div className="absolute top-4  flexBetween  left-0 pl-7 pr-5 right-0 w-full ">
-          <span className="text-[#9F9C9C] font-semibold">
-            Top Selling Departments
-          </span>
-          <div className="flexEnd gap-x-4">
-            <button className="flexStart gap-x-2">
-              <span>Week</span>
-              <img src="/icons/arrowDown.svg" alt="" className="w-2" />
-            </button>
+      <div className="absolute top-4  flexBetween  left-0 pl-7 pr-5 right-0 w-full ">
+        <span className="text-[#9F9C9C] font-semibold">
+          Top Selling Departments
+        </span>
+        <div className="flexEnd gap-x-4">
+          <DateSelector setDate={setDate} initialDate={date} />
+          {!isFullScreenModalOpen ? (
             <button
               onClick={() =>
                 setFullScreenGraph(
                   <TopSelling
                     className={" w-[96%] md:w-2/3 h-fit md:h-[65%]"}
+                    initialDate={date}
                   />
                 )
               }
             >
               <img src="/icons/fullView.svg" alt="" className="w-3" />
             </button>
-          </div>
+          ) : (
+            <button onClick={() => setFullScreenModalOpen(false)}>
+              <CloseIcon className="text-white/45" />
+            </button>
+          )}
         </div>
-      )}
+      </div>
     </section>
   );
 };
