@@ -59,7 +59,7 @@ const HomeDashboard = () => {
       {isFullScreenModalOpen && Graph && (
         <div
           onClick={() => setFullScreenModalOpen(false)}
-          className={`fixed left-0 right-0 top-0 px-4 md:p-20
+          className={`fixed left-0 right-0 z-50 top-0 px-4 md:p-20
    bottom-0 bg-black/10 backdrop-blur-md flexCenter`}
         >
           <div

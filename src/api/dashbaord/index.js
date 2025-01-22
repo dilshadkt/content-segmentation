@@ -10,11 +10,11 @@ import {
 } from "../endpoint";
 import API from "../httpService";
 
-export const insight = async ({ fromDate, toDate }) => {
+export const insight = async ({ from, to }) => {
   const { data } = await API.get(TODAY_INSIGHT, {
     headers: {
-      fromDate: "2019-01-01",
-      toDate: "2020-01-01",
+      fromDate: from,
+      toDate: to,
     },
   });
   return data;

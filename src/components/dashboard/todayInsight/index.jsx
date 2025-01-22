@@ -1,30 +1,37 @@
 import React, { useState } from "react";
-import { cardsData } from "../../../constants";
 import { useQuery } from "react-query";
 import { insight } from "../../../api/dashbaord";
+import { getFormattedDate } from "../../../lib/GetFormatedDate";
+import CustomeDateModal from "../../shared/datePicker/customePicker";
 import NoDataLoading from "../../shared/loading";
+import Header from "./header";
+import StatCards from "./statCards";
 
 const TodayInsight = ({ className }) => {
   const today = new Date();
   const formattedDate = today.toISOString().split("T")[0];
-  const [selectedData, setSelectedData] = useState({
-    fromDate: formattedDate,
-    toDate: formattedDate,
+  const [date, setDate] = useState({
+    from: formattedDate,
+    to: formattedDate,
   });
-  const { data, isLoading, isError } = useQuery(
-    ["insight", selectedData],
-    () => insight(selectedData),
-    {
-      select: (data) => data?.data?.insight?.[0],
-    }
-  );
+  const [showCustomModal, setShowCustomModal] = useState(false);
+  const [customeDate, setCustomeDate] = useState({
+    from: getFormattedDate(0),
+    to: getFormattedDate(0),
+  });
+  const {
+    data: insightData,
+    isLoading,
+    isError,
+  } = useQuery(["insight", date], () => insight(date), {
+    select: (data) => data?.data?.insight?.[0],
+    onSuccess: () => setShowCustomModal(false),
+  });
 
-  const insightData = data;
-
-  const formatAmount = (amount) => {
-    return Number(amount).toFixed(2);
+  const handleCustomDateSubmit = (e) => {
+    e.preventDefault();
+    setDate(customeDate);
   };
-
   if (isLoading || isError) {
     return (
       <NoDataLoading
@@ -33,52 +40,34 @@ const TodayInsight = ({ className }) => {
       />
     );
   }
+
+  const renderContent = () => {
+    if (!insightData?.Expense && !insightData?.Income && !insightData?.GP) {
+      return (
+        <NoDataLoading
+          noData={true}
+          className="h-full  min-h-[100px]   lg:col-span-3"
+        />
+      );
+    } else {
+      return <StatCards insightData={insightData} />;
+    }
+  };
   return (
     <div
       className={`lg:col-span-3 bg-[#0D0D0D] gap-y-6 flex flex-col
      p-5 rounded-xl ${className}`}
     >
-      <div className="flexBetween">
-        <div className="flex flex-col ">
-          <h4 className="text-[#B5B3B3] font-bold md:text-3xl">
-            Today Insights
-          </h4>
-          <span className=" text-xs md:text-sm text-[#737791] mt-1">
-            Income Statement Summary
-          </span>
-        </div>
-        <div className="flexStart gap-x-3">
-          <div className="flexStart gap-x-3">
-            <span className="text-[#CED7DE] text-sm hidden md:block">
-              Select Date Range
-            </span>
-            <button>
-              <img src="/icons/calender.svg" alt="" />
-            </button>
-          </div>
-          <button className="flexStart gap-x-2 border px-3 py-2 rounded-lg border-[#253A4D]">
-            <img src="/icons/export.svg" alt="" />
-            <span className="text-[#898384] text-sm">Export</span>
-          </button>
-        </div>
-      </div>
-      <div className="h-full grid gap-y-3 md:grid-cols-3 gap-x-4">
-        {cardsData.map((data) => (
-          <div
-            key={data.id}
-            className={`rounded-xl p-3 gap-y-1  flex justify-center flex-col ${data.bgColor}`}
-          >
-            <img src={data.icon} alt="" className="w-8" />
-            <span className="font-semibold text-[#9F9C9C] text-lg mt-1">
-              {formatAmount(insightData?.[data.dataKey] || 0)}
-            </span>
-            <span className="font-medium text-[#9F9C9C]">{data.title}</span>
-            <span className="font-light text-xs text-[#898384] -translate-y-[2px]">
-              {data.description}
-            </span>
-          </div>
-        ))}
-      </div>
+      <Header setShowCustomModal={setShowCustomModal} date={date} />
+      {renderContent()}
+      {showCustomModal && (
+        <CustomeDateModal
+          dateRangeForCustome={customeDate}
+          handleCustomDateSubmit={handleCustomDateSubmit}
+          setDateRangeForCustome={setCustomeDate}
+          setShowCustomModal={setShowCustomModal}
+        />
+      )}
     </div>
   );
 };

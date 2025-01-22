@@ -1,19 +1,17 @@
 import React, { useState } from "react";
+import { useQuery } from "react-query";
 import {
-  LineChart,
   Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  ResponsiveContainer,
 } from "recharts";
-import { UseCommon } from "../../../../hooks/UseCommon";
-import CloseIcon from "@mui/icons-material/Close";
-import { useQuery } from "react-query";
 import { insightGraph } from "../../../../api/dashbaord";
-import NoDataLoading from "../../../shared/loading";
 import { getFormattedDate } from "../../../../lib/GetFormatedDate";
-import DateSelector from "../../../shared/datePicker";
+import NoDataLoading from "../../../shared/loading";
+import InsightGraphHeader from "./header";
 
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload?.length) {
@@ -56,13 +54,14 @@ const TodayInsightGraph = ({
   graphClassName = "",
   initialDate,
 }) => {
+  const today = new Date();
+  const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
   const [date, setDate] = useState({
-    from: initialDate?.from || getFormattedDate(0),
+    from: initialDate?.from || startOfMonth.toISOString().split("T")[0],
     to: initialDate?.to || getFormattedDate(0),
   });
   const [hoveredLine, setHoveredLine] = useState(null);
-  const { setFullScreenModalOpen, isFullScreenModalOpen, setGraph } =
-    UseCommon();
+
   const { data, isLoading, isError } = useQuery(
     ["insightGraph", date],
     () => insightGraph(date),
@@ -74,6 +73,10 @@ const TodayInsightGraph = ({
         })),
     }
   );
+  const noData = data?.every(
+    (item) => item.Revenue === 0 && item.Profit === 0 && item.Expenses === 0
+  );
+
   if (isLoading || isError) {
     return (
       <NoDataLoading
@@ -83,147 +86,117 @@ const TodayInsightGraph = ({
     );
   }
 
+  const renderContent = () => {
+    if (noData) {
+      return (
+        <NoDataLoading
+          noData={noData}
+          className="h-full col-span-1 pt-6 lg:col-span-2"
+        />
+      );
+    } else {
+      return (
+        <div className={`h-[190px] relative z-10 w-full ${graphClassName}`}>
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              data={data}
+              margin={{
+                left: -22,
+                bottom: -12,
+              }}
+            >
+              <XAxis
+                fontSize={12}
+                dataKey="Date"
+                stroke="#59588D"
+                axisLine={false}
+                tickLine={false}
+              />
+              <YAxis
+                type="number"
+                fontSize={12}
+                domain={[0, "dataMax"]}
+                stroke="#59588D"
+                axisLine={false}
+                tickLine={false}
+              />
+              <Tooltip
+                content={<CustomTooltip />}
+                cursor={{
+                  stroke: "#3D26A3",
+                  strokeWidth: 60,
+                  strokeOpacity: 0.2,
+                }}
+              />
+
+              {/* Revenue Line */}
+              <Line
+                type="monotone"
+                dataKey="Revenue"
+                stroke="#4229B4"
+                strokeWidth={hoveredLine === "revenue" ? 3 : 1.4}
+                dot={false}
+                activeDot={{
+                  r: 6,
+                  fill: "#FFD9FA",
+                  stroke: "#FFF2FE",
+                  strokeOpacity: "0.3",
+                  strokeWidth: 12,
+                }}
+                onMouseEnter={() => setHoveredLine("revenue")}
+                onMouseLeave={() => setHoveredLine(null)}
+              />
+
+              {/* Profit Line */}
+              <Line
+                type="monotone"
+                dataKey="Profit"
+                stroke="#8C22C0"
+                strokeWidth={hoveredLine === "profit" ? 3 : 1.4}
+                dot={false}
+                activeDot={{
+                  r: 6,
+                  fill: "#FFD9FA",
+                  stroke: "#FFF2FE",
+                  strokeOpacity: "0.3",
+                  strokeWidth: 12,
+                }}
+                onMouseEnter={() => setHoveredLine("profit")}
+                onMouseLeave={() => setHoveredLine(null)}
+              />
+
+              {/* Expenses Line */}
+              <Line
+                type="monotone"
+                dataKey="Expenses"
+                stroke="#0B8C04"
+                strokeWidth={hoveredLine === "expenses" ? 3 : 1.4}
+                dot={false}
+                activeDot={{
+                  r: 6,
+                  fill: "#FFD9FA",
+                  stroke: "#FFF2FE",
+                  strokeOpacity: "0.3",
+                  strokeWidth: 12,
+                }}
+                onMouseEnter={() => setHoveredLine("expenses")}
+                onMouseLeave={() => setHoveredLine(null)}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      );
+    }
+  };
+
   return (
     <section
       className={`h-[290px] lg:h-full relative col-span-1 lg:col-span-2 flex items-end 
-      justify-start bg-[#0D0D0D] rounded-xl p-6  z-0 ${className}`}
+      justify-start bg-[#0D0D0D] rounded-xl p-6  z-10 ${className}`}
     >
-      <div className={`h-[190px] w-full ${graphClassName}`}>
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart
-            data={data}
-            margin={{
-              left: -22,
-              bottom: -12,
-            }}
-          >
-            <XAxis
-              fontSize={12}
-              dataKey="Date"
-              stroke="#59588D"
-              axisLine={false}
-              tickLine={false}
-            />
-            <YAxis
-              type="number"
-              fontSize={12}
-              domain={[0, "dataMax"]}
-              stroke="#59588D"
-              axisLine={false}
-              tickLine={false}
-            />
-            <Tooltip
-              content={<CustomTooltip />}
-              cursor={{
-                stroke: "#3D26A3",
-                strokeWidth: 60,
-                strokeOpacity: 0.2,
-              }}
-            />
-
-            {/* Revenue Line */}
-            <Line
-              type="monotone"
-              dataKey="Revenue"
-              stroke="#4229B4"
-              strokeWidth={hoveredLine === "revenue" ? 3 : 1.4}
-              dot={false}
-              activeDot={{
-                r: 6,
-                fill: "#FFD9FA",
-                stroke: "#FFF2FE",
-                strokeOpacity: "0.3",
-                strokeWidth: 12,
-              }}
-              onMouseEnter={() => setHoveredLine("revenue")}
-              onMouseLeave={() => setHoveredLine(null)}
-            />
-
-            {/* Profit Line */}
-            <Line
-              type="monotone"
-              dataKey="Profit"
-              stroke="#8C22C0"
-              strokeWidth={hoveredLine === "profit" ? 3 : 1.4}
-              dot={false}
-              activeDot={{
-                r: 6,
-                fill: "#FFD9FA",
-                stroke: "#FFF2FE",
-                strokeOpacity: "0.3",
-                strokeWidth: 12,
-              }}
-              onMouseEnter={() => setHoveredLine("profit")}
-              onMouseLeave={() => setHoveredLine(null)}
-            />
-
-            {/* Expenses Line */}
-            <Line
-              type="monotone"
-              dataKey="Expenses"
-              stroke="#0B8C04"
-              strokeWidth={hoveredLine === "expenses" ? 3 : 1.4}
-              dot={false}
-              activeDot={{
-                r: 6,
-                fill: "#FFD9FA",
-                stroke: "#FFF2FE",
-                strokeOpacity: "0.3",
-                strokeWidth: 12,
-              }}
-              onMouseEnter={() => setHoveredLine("expenses")}
-              onMouseLeave={() => setHoveredLine(null)}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-
+      {renderContent()}
       {/* header  part  */}
-      <div className="absolute top-4  flexBetween  left-0 pl-5 2xl:pl-14 pr-5 right-0 w-full ">
-        <div className="flexStart gap-x-2">
-          <div className="bg-[#313131] flexStart gap-x-2  px-3 rounded-sm">
-            <div className="w-[6px] h-[6px] rounded-full bg-[#1A9FFF]"></div>
-            <span className="font-light text-xs 2xl:text-sm text-[#898384]">
-              Revenue
-            </span>
-          </div>
-          <div className="bg-[#313131] flexStart gap-x-2  px-3 rounded-sm">
-            <div className="w-[6px] h-[6px] rounded-full bg-[#6F57DE]"></div>
-            <span className="font-light text-xs 2xl:text-sm text-[#898384]">
-              Profilt
-            </span>
-          </div>
-          <div className="bg-[#313131] flexStart gap-x-2  px-3 rounded-sm">
-            <div className="w-[6px] h-[6px] rounded-full bg-[#1A9FFF]"></div>
-            <span className="font-light text-xs 2xl:text-sm text-[#898384]">
-              Revenue
-            </span>
-          </div>
-        </div>
-        <div className="flexEnd gap-x-4">
-          <DateSelector setDate={setDate} initialDate={date} />
-          {!isFullScreenModalOpen ? (
-            <button
-              onClick={() => {
-                setFullScreenModalOpen(true);
-                setGraph(
-                  <TodayInsightGraph
-                    className={" w-[96%]  md:w-[80%]  h-fit md:h-[65%]"}
-                    graphClassName={" h-[250px] md:h-[400px]"}
-                    initialDate={date}
-                  />
-                );
-              }}
-            >
-              <img src="/icons/fullView.svg" alt="" className="w-3" />
-            </button>
-          ) : (
-            <button onClick={() => setFullScreenModalOpen(false)}>
-              <CloseIcon className="text-white/45" />
-            </button>
-          )}
-        </div>
-      </div>
+      <InsightGraphHeader date={date} setDate={setDate} />
     </section>
   );
 };

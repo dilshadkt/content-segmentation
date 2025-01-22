@@ -5,7 +5,7 @@ import CustomeDateModal from "./customePicker";
 import { getFormattedDate } from "../../../lib/GetFormatedDate";
 import { getInitailDate } from "../../../lib/GetInitalDate";
 
-const DateSelector = ({ setDate, initialDate }) => {
+const DateSelector = ({ setDate, initialDate, dateOption = DATE_OPTIONS }) => {
   // Store selected option in state
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(
@@ -34,13 +34,6 @@ const DateSelector = ({ setDate, initialDate }) => {
     from: getFormattedDate(0),
     to: getFormattedDate(0),
   });
-
-  // Only update parent's date when dateRange changes
-  useEffect(() => {
-    if (setDate) {
-      setDate(dateRange);
-    }
-  }, [dateRange, setDate]);
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
@@ -140,11 +133,13 @@ const DateSelector = ({ setDate, initialDate }) => {
     }
 
     setDateRange(newDateRange);
+    setDate(newDateRange);
   };
 
   const handleCustomDateSubmit = (e) => {
     e.preventDefault();
     setDateRange(dateRangeForCustome);
+    setDate(dateRangeForCustome);
     setSelectedOption("Custom");
     setShowCustomModal(false);
   };
@@ -164,16 +159,18 @@ const DateSelector = ({ setDate, initialDate }) => {
       {isOpen && (
         <ul
           ref={menuRef}
-          className="absolute overflow-y-auto right-0 z-10 mt-2 w-56 max-h-[180px] bg-black rounded-lg text-xs shadow-lg border border-gray-800 overflow-hidden"
+          className="absolute overflow-y-auto right-0 z-10 mt-2
+          whitespace-nowrap w-fit max-h-[180px] bg-black rounded-lg 
+          text-xs shadow-lg border border-gray-800 overflow-hidden"
         >
-          {DATE_OPTIONS.map((option) => (
+          {dateOption.map((option) => (
             <li
               key={option}
               onClick={() => handleOptionSelect(option)}
               className={`px-4 py-2 cursor-pointer hover:bg-gray-600 hover:text-white
                 ${
                   selectedOption === option
-                    ? "bg-gray-600 text-white"
+                    ? "bg-gray-800 text-white"
                     : "text-gray-400"
                 }`}
             >

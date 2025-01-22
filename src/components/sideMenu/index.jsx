@@ -17,7 +17,7 @@ const MobileFloatingMenu = () => {
         ref={menuRef}
         className={`${
           isSideBarOpen ? `translate-x-0` : `translate-x-[100%]`
-        } p-4 py-5 fixed right-0  md:hidden top-0 bottom-0 bg-[#8909C8]/50 backdrop-blur-md
+        } z-[1000] p-4 py-5 fixed right-0  md:hidden top-0 bottom-0 bg-[#8909C8]/50 backdrop-blur-md
         transition-all  duration-300   rounded-l-lg my-auto h-fit`}
       >
         <div className="w-full h-full relative">
