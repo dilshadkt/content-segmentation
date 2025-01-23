@@ -4,7 +4,7 @@ import { UseCommon } from "../../../../../hooks/UseCommon";
 const TargetBarchart = ({ data }) => {
   const { isFullScreenModalOpen } = UseCommon();
   return (
-    <div className="flex flex-col gap-y-3 h-full mt-12">
+    <div className="flex  flex-col gap-y-3 h-full mt-12">
       <div
         className={`w-full relative ${
           !isFullScreenModalOpen && "h-[110px]"

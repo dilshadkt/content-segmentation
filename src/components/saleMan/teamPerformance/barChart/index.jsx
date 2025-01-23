@@ -9,9 +9,9 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import CustomLegend from "../customLegend";
 
 const TeamPerformanceChart = ({ data }) => {
-  // Custom color function based on value
   const getBarColor = (value) => {
     if (!value) return "#963333"; // Default color for zero/null values
     if (value <= 500) return "#963333"; // Low - Red
@@ -38,51 +38,51 @@ const TeamPerformanceChart = ({ data }) => {
   };
 
   return (
-    <div className="h-full">
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart
-          data={data}
-          margin={{
-            top: 20,
-            right: 0,
-            left: -20,
-            bottom: 0,
-          }}
-        >
-          <CartesianGrid vertical={false} horizontal stroke="#1B1B1B" />
-          <XAxis
-            dataKey="day"
-            stroke="#666"
-            tick={{ fill: "#666" }}
-            fontSize={12}
-            tickLine={false}
-            axisLine={false}
-          />
-          <YAxis
-            stroke="#666"
-            tick={{ fill: "#666" }}
-            domain={[0, 5000]}
-            ticks={[0, 100, 500, 1000, 2000, 5000]}
-            fontSize={12}
-            tickLine={false}
-            axisLine={false}
-          />
-          <Tooltip
-            contentStyle={{
-              backgroundColor: "#e4dbdb",
-              border: "none",
-              borderRadius: "4px",
-              color: "#fff",
+    <div className="h-full  flex flex-col relative">
+      <div className="max-h-[340px] h-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart
+            data={data}
+            margin={{
+              top: 20,
+              right: 0,
+              left: -20,
+              bottom: 0,
             }}
-          />
-          <Legend
-            wrapperStyle={{
-              color: "#474343",
-            }}
-          />
-          <Bar dataKey="value" shape={<CustomBar />} barSize={20} />
-        </BarChart>
-      </ResponsiveContainer>
+          >
+            <CartesianGrid vertical={false} horizontal stroke="#1B1B1B" />
+            <XAxis
+              dataKey="day"
+              stroke="#666"
+              tick={{ fill: "#666" }}
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+            />
+            <YAxis
+              stroke="#666"
+              tick={{ fill: "#666" }}
+              domain={[0, 5000]}
+              ticks={[0, 100, 500, 1000, 2000, 5000]}
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+            />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "#e4dbdb",
+                border: "none",
+                borderRadius: "4px",
+                color: "#1e1c1c",
+              }}
+            />
+
+            <Bar dataKey="value" shape={<CustomBar />} barSize={20} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
+      <CustomLegend />
     </div>
   );
 };
