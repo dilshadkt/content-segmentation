@@ -32,13 +32,13 @@ const TargetArchived = ({ setSelectedEmplyee, selectedEmplyee }) => {
         isSideBarOpen
           ? ` col-span-1 lg:col-span-2 2xl:col-span-1`
           : `col-span-1`
-      }  py-5 px-4  overflow-y-auto `}
+      }  py-5 px-4  h-[400px] lg:h-full   flex flex-col overflow-y-auto `}
     >
       <div className="flexBetween">
         <span>Target Archived</span>
         <span className="text-sm">Sales Man List</span>
       </div>
-      <div className="flex flex-col gap-y-3 mt-7">
+      <div className="flex flex-col overflow-y-auto   gap-y-3 mt-7">
         {data?.map((item, index) => (
           <div
             onClick={() => setSelectedEmplyee(item?.SalesManID)}
