@@ -44,11 +44,11 @@ const TotalRevenueBarChart = ({ className, graphClassName, initialDate }) => {
       return (
         <NoDataLoading
           noData={noData}
-          className={`${
+          className={` ${
             isSideBarOpen
               ? `col-span-1 2xl:col-span-3`
               : ` lg:h-full lg:col-span-3`
-          } h-[290px] w-full pt-16 `}
+          } h-[290px] w-full pt-16`}
         />
       );
     } else {

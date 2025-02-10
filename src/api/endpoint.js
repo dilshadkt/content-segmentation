@@ -8,3 +8,6 @@ export const TARGET_VS_REALITY = "6662/TargetVsReality";
 export const TOP_SELLING_DEPARTMENT = "6662/TopSellingDepartments";
 export const TOP_SELLING_BRANCHES = "6662/TopSellingBranches";
 export const PRODUCT_MOVEMENT = "6662/ProductMovement";
+
+//sales report
+export const SALES_EMPOYEE_SUMMERY = "6662/SalesEmployeeSummary";

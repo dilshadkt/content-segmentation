@@ -22,12 +22,7 @@ const TargetVsReality = ({ className, graphClassName, initialDate }) => {
   const noData = data?.every(
     (item) => item?.["Target Sales"] === 0 && item?.["Reality Sales"] === 0
   );
-  const {
-    isSideBarOpen,
-    isFullScreenModalOpen,
-    setFullScreenModalOpen,
-    setFullScreenGraph,
-  } = UseCommon();
+  const { isSideBarOpen } = UseCommon();
   if (isLoading || isError) {
     return (
       <NoDataLoading
