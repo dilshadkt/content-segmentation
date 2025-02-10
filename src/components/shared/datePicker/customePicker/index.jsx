@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import React from "react";
+import React, { useRef } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 
 const CustomeDateModal = ({
@@ -8,6 +8,10 @@ const CustomeDateModal = ({
   dateRangeForCustome,
   setDateRangeForCustome,
 }) => {
+  // Refs for input fields
+  const fromDateRef = useRef(null);
+  const toDateRef = useRef(null);
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-[1000] flex items-center justify-center">
       <div className="bg-black border border-gray-800 shadow-md p-6 rounded-lg w-96">
@@ -22,6 +26,7 @@ const CustomeDateModal = ({
         </div>
         <form onSubmit={handleCustomDateSubmit}>
           <div className="space-y-4">
+            {/* From Date */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 From Date
@@ -29,6 +34,7 @@ const CustomeDateModal = ({
               <div className="relative">
                 <input
                   type="date"
+                  ref={fromDateRef}
                   value={dateRangeForCustome.from}
                   onChange={(e) =>
                     setDateRangeForCustome({
@@ -36,14 +42,18 @@ const CustomeDateModal = ({
                       from: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 text-sm bg-transparent border
-                border-gray-800 rounded-md"
+                  className="w-full px-3 py-2 text-sm bg-transparent border border-gray-800 rounded-md"
                 />
-                <span className="absolute right-3 top-0 bottom-0 my-auto h-fit">
+                <span
+                  className="absolute cursor-pointer right-4 top-0 bottom-0 my-auto h-fit"
+                  onClick={() => fromDateRef.current?.showPicker()}
+                >
                   <FaCalendarAlt />
                 </span>
               </div>
             </div>
+
+            {/* To Date */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 To Date
@@ -51,6 +61,7 @@ const CustomeDateModal = ({
               <div className="relative">
                 <input
                   type="date"
+                  ref={toDateRef}
                   value={dateRangeForCustome.to}
                   onChange={(e) =>
                     setDateRangeForCustome({
@@ -60,16 +71,18 @@ const CustomeDateModal = ({
                   }
                   className="w-full px-3 py-2 text-sm bg-transparent border border-gray-800 rounded-md"
                 />
-                <span className="absolute right-3 top-0 bottom-0 my-auto h-fit">
+                <span
+                  className="absolute cursor-pointer right-4 top-0 bottom-0 my-auto h-fit"
+                  onClick={() => toDateRef.current?.showPicker()} // Open date picker
+                >
                   <FaCalendarAlt />
                 </span>
               </div>
             </div>
+
             <button
               type="submit"
-              className="w-full  text-gray-300 py-2 rounded-md border text-sm border-violet-800
-             hover:shadow-sm hover:shadow-violet-600
-            "
+              className="w-full text-gray-300 py-2 rounded-md border text-sm border-violet-800 hover:shadow-sm hover:shadow-violet-600"
             >
               Apply
             </button>
