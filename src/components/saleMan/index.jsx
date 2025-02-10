@@ -1,44 +1,24 @@
 import React, { useState } from "react";
-import { UseCommon } from "../../hooks/UseCommon";
-import OverAllPerfomance from "./overAllPerformance";
-import TeamPerformance from "./teamPerformance";
-import WeekPerformance from "./weekPerformance";
-import Perfomance from "./performance";
-import TargetArchived from "./targetArchived";
-import CloseIcon from "@mui/icons-material/Close";
-import { getFormattedDate } from "../../lib/GetFormatedDate";
-import DateSelector from "../../components/shared/datePicker";
-import TeamPerformanceChart from "./teamPerformance/barChart";
 import { useQuery } from "react-query";
 import { SaleEmployeeSummaryDetails } from "../../api/salesman";
+import { UseCommon } from "../../hooks/UseCommon";
+import { getFormattedDate } from "../../lib/GetFormatedDate";
+import OverAllPerfomance from "./overAllPerformance";
+import TargetArchived from "./targetArchived";
+import TeamPerformance from "./teamPerformance";
+import TeamPerformanceChart from "./teamPerformance/barChart";
 
-const SalesReports = ({ initialDate }) => {
-  const {
-    isSideBarOpen,
-    setFullScreenModalOpen,
-    isFullScreenModalOpen,
-    setGraph,
-  } = UseCommon();
-  const today = new Date();
+const SalesReports = () => {
+  const { isSideBarOpen } = UseCommon();
   const [selectedEmplyee, setSelectedEmplyee] = useState(null);
-  const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-  const [date, setDate] = useState({
-    from: initialDate?.from || startOfMonth.toISOString().split("T")[0],
-    to: initialDate?.to || getFormattedDate(0),
-  });
 
-  const sampleData = Array.from({ length: 31 }, (_, i) => ({
-    day: i + 1,
-    value: Math.floor(Math.random() * 3000) + 100,
-  }));
-  const { data, error, isLoading, isError } = useQuery(
+  const { data, isLoading, isError } = useQuery(
     ["sales", selectedEmplyee],
     () => SaleEmployeeSummaryDetails(selectedEmplyee),
     {
       select: (data) => data.data,
     }
   );
-
   return (
     <section
       className={`w-full font-radio overflow-y-auto  gap-x-3 h-full grid ${
@@ -74,43 +54,14 @@ const SalesReports = ({ initialDate }) => {
           } min-h-[380px] bg-[#0D0D0D]
            gap-3   flex flex-col     p-4 rounded-lg`}
         >
-          <div className="flexBetween  ">
-            <div className="flexStart gap-x-4">
-              <h4 className=" text-lg">Total Collected Amount</h4>
-              <span>20,000 AED</span>
-            </div>
-            <div className="flexEnd gap-x-4">
-              <DateSelector
-                setDate={setDate}
-                initialDate={date}
-                dateOption={["This Month", "Previous Month", "Custom"]}
-              />
-              {!isFullScreenModalOpen ? (
-                <button
-                  onClick={() => {
-                    setFullScreenModalOpen(true);
-                    setGraph(
-                      <SalesReports
-                        className={" w-[96%]  md:w-[80%]  h-fit md:h-[65%]"}
-                        graphClassName={" h-[250px] md:h-[400px]"}
-                        initialDate={date}
-                      />
-                    );
-                  }}
-                >
-                  <img src="/icons/fullView.svg" alt="" className="w-3" />
-                </button>
-              ) : (
-                <button onClick={() => setFullScreenModalOpen(false)}>
-                  <CloseIcon className="text-white/45" />
-                </button>
-              )}
-            </div>
-          </div>
-          <span className="text-sm font-light  text-[#898384] -translate-y-3 ">
-            Displaying the selected time period for the daily sales graph.
-          </span>
-          <TeamPerformanceChart data={sampleData} />
+          <TeamPerformanceChart
+            data={data?.empDaysSummary?.slice(0, 31).map((item) => ({
+              ...item,
+              InvDate: item.InvDate?.split("/")[0],
+            }))}
+            isLoading={isLoading}
+            isError={isError}
+          />
         </div>
       </div>
       <TargetArchived

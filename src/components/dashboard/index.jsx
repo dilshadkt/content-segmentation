@@ -55,21 +55,6 @@ const HomeDashboard = () => {
         <TopSellingBranches />
         <ProductMovement />
       </div>
-      {/* full screen graph  */}
-      {isFullScreenModalOpen && Graph && (
-        <div
-          onClick={() => setFullScreenModalOpen(false)}
-          className={`fixed left-0 right-0 z-50 top-0 px-4 md:p-20
-   bottom-0 bg-black/10 backdrop-blur-md flexCenter`}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className=" w-full md:w-[80%] h-full relative justify-center flex items-center"
-          >
-            {Graph}
-          </div>
-        </div>
-      )}
     </section>
   );
 };
