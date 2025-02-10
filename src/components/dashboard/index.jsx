@@ -1,6 +1,5 @@
 import React from "react";
 import { UseCommon } from "../../hooks/UseCommon";
-
 import {
   ProductMovement,
   Sales,
@@ -12,12 +11,7 @@ import {
   TotalRevenue,
 } from "../../components";
 const HomeDashboard = () => {
-  const {
-    isSideBarOpen,
-    isFullScreenModalOpen,
-    setFullScreenModalOpen,
-    Graph,
-  } = UseCommon();
+  const { isSideBarOpen } = UseCommon();
   return (
     <section className="w-full h-full gap-y-4  flex flex-col overflow-y-auto">
       <div className="grid lg:grid-cols-5 gap-y-4 lg:gap-y-0 gap-x-4 lg:min-h-[280px]">

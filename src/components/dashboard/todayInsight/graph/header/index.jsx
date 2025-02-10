@@ -5,11 +5,19 @@ import TodayInsightGraph from "..";
 import { UseCommon } from "../../../../../hooks/UseCommon";
 
 const InsightGraphHeader = ({ setDate, date }) => {
-  const { setFullScreenModalOpen, isFullScreenModalOpen, setGraph } =
-    UseCommon();
+  const {
+    setFullScreenModalOpen,
+    isFullScreenModalOpen,
+    setGraph,
+    isSideBarOpen,
+  } = UseCommon();
   return (
     <div className="absolute top-4  flexBetween  left-0 pl-5 2xl:pl-14 pr-5 right-0 w-full ">
-      <div className="flexStart gap-x-2">
+      <div
+        className={`${
+          isSideBarOpen ? `flexStart lg:hidden` : `flexStart`
+        }  gap-x-2`}
+      >
         <div className="bg-[#313131] flexStart gap-x-2  px-3 rounded-sm">
           <div className="w-[6px] h-[6px] rounded-full bg-[#1A9FFF]"></div>
           <span className="font-light text-xs 2xl:text-sm text-[#898384]">

@@ -12,3 +12,6 @@ export const PRODUCT_MOVEMENT = "6662/ProductMovement";
 //sales report
 export const SALES_EMPOYEE_SUMMERY = "6662/SalesEmployeeSummary";
 export const SALES_EMPOYEE_SUMMERY_ID = "6662/SalesEmployeeSummaryByID";
+
+//Counter report
+export const COUNTERS_DETAILS = "6662/getCounterDetails";

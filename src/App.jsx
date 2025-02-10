@@ -27,14 +27,13 @@ function App() {
               <Route
                 path="/:branchName/reports"
                 element={
-                  <ProtectedRoute>
-                    <DashboardLayout />
-                  </ProtectedRoute>
+                  // <ProtectedRoute>
+                  <DashboardLayout />
+                  // </ProtectedRoute>
                 }
               >
                 <Route index element={<DashboardHome />} />
                 <Route path="salesman" element={<SalesManReport />} />
-                <Route path="cashier" element={<CashierReport />} />
                 <Route path="cashier" element={<CashierReport />} />
                 <Route path="counter" element={<CounterReport />} />
                 <Route path="department" element={<DepartmentReport />} />
