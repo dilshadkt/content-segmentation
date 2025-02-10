@@ -9,6 +9,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { getFormattedDate } from "../../lib/GetFormatedDate";
 import DateSelector from "../../components/shared/datePicker";
 import TeamPerformanceChart from "./teamPerformance/barChart";
+import { useQuery } from "react-query";
+import { SaleEmployeeSummaryDetails } from "../../api/salesman";
 
 const SalesReports = ({ initialDate }) => {
   const {
@@ -18,6 +20,7 @@ const SalesReports = ({ initialDate }) => {
     setGraph,
   } = UseCommon();
   const today = new Date();
+  const [selectedEmplyee, setSelectedEmplyee] = useState(null);
   const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
   const [date, setDate] = useState({
     from: initialDate?.from || startOfMonth.toISOString().split("T")[0],
@@ -28,6 +31,13 @@ const SalesReports = ({ initialDate }) => {
     day: i + 1,
     value: Math.floor(Math.random() * 3000) + 100,
   }));
+  const { data, error, isLoading, isError } = useQuery(
+    ["sales", selectedEmplyee],
+    () => SaleEmployeeSummaryDetails(selectedEmplyee),
+    {
+      select: (data) => data.data,
+    }
+  );
 
   return (
     <section
@@ -43,10 +53,20 @@ const SalesReports = ({ initialDate }) => {
         }  `}
       >
         <div className="md:h-[380px]  overflow-hidden">
-          <TeamPerformance className={"h-full"} />
+          <TeamPerformance
+            className={"h-full"}
+            data={data?.empProductSummary[0]}
+            isLoading={isLoading}
+            isError={isError}
+          />
         </div>
         <div className="md:h-[380px]">
-          <OverAllPerfomance className={"h-full"} />
+          <OverAllPerfomance
+            isLoading={isLoading}
+            isError={isError}
+            className={"h-full"}
+            data={data?.empSalesSummary}
+          />
         </div>
         <div
           className={`w-full  ${
@@ -93,7 +113,10 @@ const SalesReports = ({ initialDate }) => {
           <TeamPerformanceChart data={sampleData} />
         </div>
       </div>
-      <TargetArchived />
+      <TargetArchived
+        setSelectedEmplyee={setSelectedEmplyee}
+        selectedEmplyee={selectedEmplyee}
+      />
     </section>
   );
 };

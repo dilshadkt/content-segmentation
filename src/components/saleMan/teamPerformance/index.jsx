@@ -1,7 +1,22 @@
 import { UseCommon } from "../../../hooks/UseCommon";
+import NoDataLoading from "../../shared/loading";
 
-const TeamPerformance = ({ className, graphClassName }) => {
+const TeamPerformance = ({
+  className,
+  graphClassName,
+  data,
+  isLoading,
+  isError,
+}) => {
   const { isSideBarOpen } = UseCommon();
+  if (isLoading || isError) {
+    return (
+      <NoDataLoading
+        isError={isError}
+        className="min-h-[380px] lg:col-span-3"
+      />
+    );
+  }
   return (
     <section
       className={` ${
@@ -13,7 +28,9 @@ const TeamPerformance = ({ className, graphClassName }) => {
         <span className="text-sm font-light text-[#FAFAFA]">
           Top Performing Department
         </span>
-        <h4 className="text-[#FAFAFA] font-medium">Electronics</h4>
+        <h4 className="text-[#FAFAFA] font-medium">
+          {data?.TopPerformingDepartment}
+        </h4>
         <p className="text-xs text-[#898384]">
           based on where he generates the most sales
         </p>
@@ -22,7 +39,9 @@ const TeamPerformance = ({ className, graphClassName }) => {
         <span className="text-sm font-light text-[#FAFAFA]">
           Top Performing Prouduct
         </span>
-        <h4 className="text-[#FAFAFA] font-medium">Samsung S23 ultra</h4>
+        <h4 className="text-[#FAFAFA] font-medium">
+          {data?.TopPerformingProduct}
+        </h4>
         <p className="text-xs text-[#898384]">
           Reflecting the product that has achieved the highest individual sales{" "}
         </p>
@@ -31,7 +50,9 @@ const TeamPerformance = ({ className, graphClassName }) => {
         <span className="text-sm font-light text-[#FAFAFA]">
           Average Sale Amount
         </span>
-        <h4 className="text-[#FAFAFA] font-medium">300.00 AED</h4>
+        <h4 className="text-[#FAFAFA] font-medium">
+          {data?.AverageSaleAmount} AED
+        </h4>
       </div>
     </section>
   );
