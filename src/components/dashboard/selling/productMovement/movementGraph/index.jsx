@@ -9,6 +9,7 @@ import {
   LabelList,
 } from "recharts";
 import { UseCommon } from "../../../../../hooks/UseCommon";
+const COLORS = ["#9789FF", "#37F4E8"];
 const MovementGraph = ({ data }) => {
   const { isFullScreenModalOpen } = UseCommon();
   return (
