@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { UseCommon } from "../../../hooks/UseCommon";
 import NoDataLoading from "../../shared/loading";
 import CounterReport from "./counterReport";
 
 const LiveCounterDetails = ({ data, isLoading, isError, refetch }) => {
   const { isSideBarOpen } = UseCommon();
+  const initialTime = parseInt(localStorage.getItem("timeLeft")) || 600;
+  const [timeLeft, setTimeLeft] = useState(initialTime);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        const newTime = prev > 0 ? prev - 1 : 600;
+        localStorage.setItem("timeLeft", newTime);
+        return newTime;
+      });
+    }, 1000);
+
+    if (timeLeft === 0) {
+      refetch(); // Refetch data when timer reaches 0
+    }
+
+    return () => clearInterval(timer);
+  }, [timeLeft, refetch]);
+  const handleRefetch = () => {
+    refetch();
+    setTimeLeft(600); // Reset timer on manual
+    localStorage.setItem("timeLeft", 600);
+  };
 
   const renderContent = () => {
     if (isLoading || isError) {
@@ -32,14 +55,17 @@ const LiveCounterDetails = ({ data, isLoading, isError, refetch }) => {
       <div className="flex flex-col gap-y-1">
         <div className="flexStart mt-5 text-sm gap-x-2">
           <span>Remaining Auto Sync Time </span>
-          <span className="text-[#6F57DE]">07:12</span>
+          <span className="text-[#6F57DE]">
+            {Math.floor(timeLeft / 60)}:
+            {(timeLeft % 60).toString().padStart(2, "0")}
+          </span>
         </div>
         <p className="text-sm   text-[#8080808C]/50">
           Counter will automatically update every hour.
         </p>
         <div className="flexEnd mt-2">
           <button
-            onClick={() => refetch()}
+            onClick={handleRefetch}
             className="flexCenter gap-x-2 border py-3 group border-[#6F57DE]/50 
       hover:border-[#6F57DE] hover:shadow-lg hover:shadow-[#6F57DE]/20 px-4 rounded-lg text-sm"
           >

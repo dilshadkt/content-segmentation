@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useQuery } from "react-query";
 import { CounterDetails } from "../../../api/counter";
 
 const CounterNumber = ({ setSelectedCounter, selectedCounter }) => {
   const { data } = useQuery("counterNumber", () => CounterDetails(), {
     select: (data) => data?.data?.counterDetails,
+    onSuccess: (data) => {
+      setSelectedCounter(data[0].CounterNumber);
+    },
   });
+  useEffect(() => {
+    setSelectedCounter(data[0].CounterNumber);
+  }, []);
+
   return (
     <div className="flex flex-col   ">
       <span className="text-sm  text-white">Counter Number</span>
@@ -22,7 +29,7 @@ const CounterNumber = ({ setSelectedCounter, selectedCounter }) => {
       } hover:shadow-[#6F57DE]/65
       `}
           >
-            C{item.CounterNumber}
+            {item.CounterNumber}
           </div>
         ))}
       </div>
