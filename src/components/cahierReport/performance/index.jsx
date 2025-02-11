@@ -8,20 +8,40 @@ import {
   Label,
   LabelList,
 } from "recharts";
-import CloseIcon from "@mui/icons-material/Close";
 import { UseCommon } from "../../../hooks/UseCommon";
-
-const data = [
-  { name: "Moving Items", value: 30 },
-  { name: "Slow Moving", value: 20 },
-  { name: "Slow Moving", value: 40 },
-  { name: "Slow Moving", value: 10 },
-];
+import NoDataLoading from "../../shared/loading";
 
 const COLORS = ["#BC277E", "#00C7BE", "#F68058", "#F8E27F"];
 
-const CashierPerformance = ({ className, listClassName, graphClassName }) => {
+const CashierPerformance = ({
+  className,
+  listClassName,
+  graphClassName,
+  data,
+  isLoading,
+  isError,
+}) => {
+  const noData = data?.every(
+    (item) => item.Amount === null && item.Percentage === null
+  );
   const { isSideBarOpen, isFullScreenModalOpen } = UseCommon();
+  if (isLoading || isError) {
+    return (
+      <NoDataLoading
+        isError={isError}
+        className="h-[380px] col-span-1 lg:col-span-2"
+      />
+    );
+  }
+
+  if (noData) {
+    return (
+      <NoDataLoading
+        noData={noData}
+        className="h-full col-span-1 pt-6 lg:col-span-2"
+      />
+    );
+  }
   return (
     <section
       className={` ${
@@ -83,19 +103,19 @@ const CashierPerformance = ({ className, listClassName, graphClassName }) => {
                 data={data}
                 innerRadius={isFullScreenModalOpen ? 68 : 58}
                 outerRadius={isFullScreenModalOpen ? 105 : 95}
-                dataKey="value"
+                dataKey="Percentage"
                 paddingAngle={4}
                 stroke="none"
                 cornerRadius={7}
               >
-                {data.map((entry, index) => (
+                {data?.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
                     fill={COLORS[index]}
                     filter={`drop-shadow(0 0 3px ${COLORS[index]})`}
                   >
                     <Label
-                      value={entry.value.toLocaleString()}
+                      value={entry?.Percentage?.toLocaleString()}
                       position="center"
                       fill="#fff"
                       style={{
@@ -116,10 +136,10 @@ const CashierPerformance = ({ className, listClassName, graphClassName }) => {
                   }}
                 />
                 <Label
-                  value={"900AED"}
-                  //   value={data
-                  //     .reduce((sum, entry) => sum + entry.value, 0)
-                  //     .toLocaleString()}
+                  // value={"900AED"}
+                  value={data
+                    ?.reduce((sum, entry) => sum + entry.Amount, 0)
+                    .toLocaleString()}
                   position="center"
                   dy={20}
                   style={{
@@ -130,7 +150,7 @@ const CashierPerformance = ({ className, listClassName, graphClassName }) => {
                   }}
                 />
                 <LabelList
-                  dataKey="value"
+                  dataKey="Percentage"
                   position="inside"
                   fill="#fff"
                   formatter={(value) => `${value.toLocaleString()}%`}

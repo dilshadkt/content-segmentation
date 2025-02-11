@@ -1,8 +1,23 @@
 import React from "react";
 import { UseCommon } from "../../../hooks/UseCommon";
+import NoDataLoading from "../../shared/loading";
+import CounterReport from "./counterReport";
 
-const LiveCounterDetails = () => {
+const LiveCounterDetails = ({ data, isLoading, isError, refetch }) => {
   const { isSideBarOpen } = UseCommon();
+
+  const renderContent = () => {
+    if (isLoading || isError) {
+      return (
+        <NoDataLoading
+          isError={isError}
+          className="h-[140px] col-span-1 lg:col-span-2"
+        />
+      );
+    } else {
+      return <CounterReport data={data} />;
+    }
+  };
   return (
     <div
       className={`bg-[#0D0D0D] h-fit md:overflow-y-auto ${
@@ -22,8 +37,9 @@ const LiveCounterDetails = () => {
         <p className="text-sm   text-[#8080808C]/50">
           Counter will automatically update every hour.
         </p>
-        <div className="flexEnd">
+        <div className="flexEnd mt-2">
           <button
+            onClick={() => refetch()}
             className="flexCenter gap-x-2 border py-3 group border-[#6F57DE]/50 
       hover:border-[#6F57DE] hover:shadow-lg hover:shadow-[#6F57DE]/20 px-4 rounded-lg text-sm"
           >
@@ -35,36 +51,7 @@ const LiveCounterDetails = () => {
             />
           </button>
         </div>
-        <div className="flex flex-col gap-y-4  mt-4">
-          {new Array(4).fill(" ").map((item, index) => (
-            <div key={index} className="flex  text-xs flex-col gap-y-3">
-              <div className="flexBetween">
-                <h5 className="text-sm">Counter 1</h5>
-                <button>
-                  <img
-                    src="/icons/eye.svg"
-                    alt=""
-                    className="w-5 hover:scale-110 transition-all duration-300"
-                  />
-                </button>
-              </div>
-              <div className="flex flex-col gap-y-3 p-4 rounded-lg border border-[#6F57DE]">
-                <div className="flexBetween text-sm">
-                  <span>Total Invoice of the Day</span>
-                  <span className="text-xs">12</span>
-                </div>
-                <div className="flexBetween">
-                  <span>Total Amount</span>
-                  <span className="text-xs">1110.00 AED</span>
-                </div>
-                <div className="flexBetween">
-                  <span>Last Invoice Time</span>
-                  <span className="text-xs">11:48am</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <div className="flex flex-col gap-y-4  mt-4">{renderContent()}</div>
       </div>
     </div>
   );

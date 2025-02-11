@@ -59,7 +59,7 @@ const TargetVsReality = ({ className, graphClassName, initialDate }) => {
      bg-[#0D0D0D] relative flex flex-col  rounded-xl ${className}`}
     >
       {renderContent()}
-      <TargetHeader />
+      <TargetHeader date={date} setDate={setDate} />
     </section>
   );
 };

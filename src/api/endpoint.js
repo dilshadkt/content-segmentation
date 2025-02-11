@@ -15,3 +15,4 @@ export const SALES_EMPOYEE_SUMMERY_ID = "6662/SalesEmployeeSummaryByID";
 
 //Counter report
 export const COUNTERS_DETAILS = "6662/getCounterDetails";
+export const COUNTERS_DETAILS_BY_ID = "6662/getCounterDetailsByID";
