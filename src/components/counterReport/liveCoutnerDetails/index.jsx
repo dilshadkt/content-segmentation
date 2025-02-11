@@ -5,7 +5,7 @@ import CounterReport from "./counterReport";
 
 const LiveCounterDetails = ({ data, isLoading, isError, refetch }) => {
   const { isSideBarOpen } = UseCommon();
-  const initialTime = parseInt(localStorage.getItem("timeLeft")) || 600;
+  const initialTime = parseInt(localStorage.getItem("timeLeft")) || 3600;
   const [timeLeft, setTimeLeft] = useState(initialTime);
 
   useEffect(() => {
@@ -25,8 +25,8 @@ const LiveCounterDetails = ({ data, isLoading, isError, refetch }) => {
   }, [timeLeft, refetch]);
   const handleRefetch = () => {
     refetch();
-    setTimeLeft(600); // Reset timer on manual
-    localStorage.setItem("timeLeft", 600);
+    setTimeLeft(3600); // Reset timer on manual
+    localStorage.setItem("timeLeft", 3600);
   };
 
   const renderContent = () => {
