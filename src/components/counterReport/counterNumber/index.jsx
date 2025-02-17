@@ -10,7 +10,7 @@ const CounterNumber = ({ setSelectedCounter, selectedCounter }) => {
     },
   });
   useEffect(() => {
-    setSelectedCounter(data[0].CounterNumber);
+    setSelectedCounter(data?.[0].CounterNumber);
   }, []);
 
   return (

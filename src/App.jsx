@@ -44,9 +44,9 @@ function App() {
               <Route
                 path="/"
                 element={
-                  <ProtectedRoute>
-                    <HomeLayout />
-                  </ProtectedRoute>
+                  // <ProtectedRoute>
+                  <HomeLayout />
+                  // </ProtectedRoute>
                 }
               >
                 <Route path="branches" element={<BranchesTarget />} />

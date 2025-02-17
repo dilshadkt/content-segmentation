@@ -70,6 +70,7 @@ const Login = () => {
               touched={touched}
               values={values}
               placeholder={"Email"}
+              className={" outline-none bg-[#404040] w-full"}
             />
             <div>
               <div className="relative ">
@@ -102,6 +103,7 @@ const Login = () => {
               touched={touched}
               values={values}
               placeholder={"Client Id"}
+              className={" outline-none bg-[#404040] w-full"}
             />
             {error && <p className="text-sm text-red-500">{error}</p>}
             <button

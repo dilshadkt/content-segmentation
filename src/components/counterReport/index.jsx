@@ -42,12 +42,12 @@ overflow-x-hidden  overflow-y-auto  gap-y-3 flex flex-col"
         >
           <div className="md:h-[380px] ">
             <ReportCard
-              data={data?.empSalesSummary[0]}
+              data={data?.empSalesSummary?.[0]}
               isLoading={isLoading}
               isError={isError}
             />
           </div>
-          <div className=" md:h-[380px]">
+          <div className=" md:h-[380px] min-h-[300px]">
             <CashierPerformance
               innerRadius={58}
               outerRadius={95}
@@ -63,7 +63,7 @@ overflow-x-hidden  overflow-y-auto  gap-y-3 flex flex-col"
         <LiveCounterDetails
           isLoading={isLoading}
           isError={isError}
-          data={data?.empProductSummary[0]}
+          data={data?.empProductSummary?.[0]}
           refetch={refetch}
         />
       </section>

@@ -3,13 +3,13 @@ import { IoEye } from "react-icons/io5";
 import { IoEyeOff } from "react-icons/io5";
 
 const CounterReport = ({ data }) => {
-  const [veiew, setView] = useState(false);
+  const [veiew, setView] = useState(true);
   return (
     <div className="flex  text-xs flex-col gap-y-3">
       <div className="flexBetween">
         <h5 className="text-sm">Counter 1</h5>
         <button onClick={() => setView(!veiew)} className="text-lg">
-          {!veiew ? <IoEye /> : <IoEyeOff />}
+          {veiew ? <IoEyeOff /> : <IoEye />}
         </button>
       </div>
       {veiew && (

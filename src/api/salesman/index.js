@@ -8,6 +8,7 @@ export const SalesEmployeeSummary = async () => {
       toDate: "2020-01-01",
     },
   });
+
   return data;
 };
 export const SaleEmployeeSummaryDetails = async (selectedEmplyee) => {

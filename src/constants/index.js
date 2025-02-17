@@ -144,3 +144,13 @@ export const DATE_OPTIONS = [
   "Previous Year",
   "Custom",
 ];
+
+export const WEEK_ORDER = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
