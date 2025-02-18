@@ -12,10 +12,10 @@ const InsightGraphHeader = ({ setDate, date }) => {
     isSideBarOpen,
   } = UseCommon();
   return (
-    <div className="absolute top-4  flexBetween  left-0 pl-5 2xl:pl-14 pr-5 right-0 w-full ">
+    <div className="absolute top-4  flexBetween  left-0 pl-5  pr-5 right-0 w-full ">
       <div
         className={`${
-          isSideBarOpen ? `flexStart lg:hidden` : `flexStart`
+          isSideBarOpen ? `flexStart lg:hidden 2xl:flexStart` : `flexStart`
         }  gap-x-2`}
       >
         <div className="bg-[#313131] flexStart gap-x-2  px-3 rounded-sm">

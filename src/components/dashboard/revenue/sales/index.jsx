@@ -62,11 +62,11 @@ const SalesAreaChart = ({ className, graphClassName, initialDate }) => {
     <section
       className={` ${
         isSideBarOpen ? `col-span-1 2xl:col-span-2` : `lg:h-full lg:col-span-2 `
-      }  h-[290px]  flex items-end justify-start 
-    overflow-hidden bg-[#0D0D0D] rounded-xl py-5 px-4 relative ${className}`}
+      }  h-[290px]  flex flex-col items-end justify-start 
+    overflow-hidden bg-[#0D0D0D] rounded-xl py-5 px-4  ${className}`}
     >
-      {renderContent()}
       <SalesHeader date={date} setDate={setDate} />
+      {renderContent()}
     </section>
   );
 };

@@ -7,7 +7,7 @@ const SalesHeader = ({ date, setDate }) => {
   const { isFullScreenModalOpen, setFullScreenGraph, setFullScreenModalOpen } =
     UseCommon();
   return (
-    <div className="absolute top-4  flexBetween  left-0 pl-7 pr-5 right-0 w-full ">
+    <div className="   flexBetween   pl-3  pr-5 right-0 w-full ">
       <span className="text-[#9F9C9C] font-semibold">Sales </span>
       <div className="flexEnd gap-x-4">
         <DateSelector
@@ -20,7 +20,7 @@ const SalesHeader = ({ date, setDate }) => {
             onClick={() =>
               setFullScreenGraph(
                 <SalesAreaChart
-                  className={` w-[96%] md:w-[80%]  h-fit md:h-[65%]`}
+                  className={` w-[96%] md:w-[80%]  h-fit md:h-[75%]`}
                   graphClassName={` h-[230px] md:h-[400px]`}
                   initialDate={date}
                 />

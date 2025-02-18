@@ -49,7 +49,8 @@ const MobileFloatingMenu = () => {
       {/* floating icon */}
       <button
         onClick={() => setSideBarOpen((prev) => !prev)}
-        className="fixed w-14 md:hidden h-14 bg-[#8909C8] rounded-full bottom-7 flexCenter right-5"
+        className="fixed z-50 w-14 md:hidden h-14 bg-[#8909C8]
+         rounded-full bottom-7 flexCenter right-5"
       >
         {isSideBarOpen ? (
           <IoCloseOutline className="text-3xl" />
