@@ -11,7 +11,7 @@ const TodayInsight = ({ className }) => {
   const today = new Date();
   const formattedDate = today.toISOString().split("T")[0];
   const [date, setDate] = useState({
-    from: formattedDate,
+    from: getFormattedDate(31),
     to: formattedDate,
   });
   const [showCustomModal, setShowCustomModal] = useState(false);

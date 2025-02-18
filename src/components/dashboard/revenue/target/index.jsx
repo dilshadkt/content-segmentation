@@ -8,9 +8,13 @@ import TargetBarchart from "./barchart";
 import TargetHeader from "./header";
 
 const TargetVsReality = ({ className, graphClassName, initialDate }) => {
+  const today = new Date();
+  const prevYear = new Date(today.getFullYear() - 1, 0, 1);
+  const lastDayPrevYear = new Date(today.getFullYear() - 1, 11, 31);
+
   const [date, setDate] = useState({
-    from: initialDate?.from || getFormattedDate(0),
-    to: initialDate?.to || getFormattedDate(0),
+    from: initialDate?.from || prevYear.toISOString().split("T")[0],
+    to: initialDate?.to || lastDayPrevYear.toISOString().split("T")[0],
   });
   const { data, isLoading, isError } = useQuery(
     ["targetVsReality", date],

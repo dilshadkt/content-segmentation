@@ -8,19 +8,14 @@ import { getFormattedDate } from "../../../../lib/GetFormatedDate";
 import MovementHeader from "./header";
 import MovementGraph from "./movementGraph";
 
-const COLORS = ["#9789FF", "#37F4E8"];
-
 const ProductMovement = ({ className, graphClassName, initialDate }) => {
+  const today = new Date();
+  const dayOfWeek = today.getDay();
   const [date, setDate] = useState({
-    from: initialDate?.from || getFormattedDate(0),
+    from: initialDate?.from || getFormattedDate(dayOfWeek),
     to: initialDate?.to || getFormattedDate(0),
   });
-  const {
-    isSideBarOpen,
-    isFullScreenModalOpen,
-    setFullScreenModalOpen,
-    setFullScreenGraph,
-  } = UseCommon();
+  const { isSideBarOpen } = UseCommon();
   const { data, isLoading, isError } = useQuery(
     ["productMovement", date],
     () => productMovement(date),
