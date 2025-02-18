@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { menuItems } from "../../constants";
+import { MENU_ITEMS } from "../../constants";
 import DehazeIcon from "@mui/icons-material/Dehaze";
 import { Link, useParams } from "react-router-dom";
 import { UseCommon } from "../../hooks/UseCommon";
@@ -26,7 +26,7 @@ const MobileFloatingMenu = () => {
           flex flex-col gap-y-2
           max-h-[250px]  overflow-y-auto "
           >
-            {menuItems.map((item) => (
+            {MENU_ITEMS.map((item) => (
               <Link
                 key={item.id}
                 to={item.id !== 9 && `/${branchName}${item.path}`}

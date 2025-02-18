@@ -20,7 +20,13 @@ const ProductMovement = ({ className, graphClassName, initialDate }) => {
     ["productMovement", date],
     () => productMovement(date),
     {
-      select: (data) => data?.data?.salesData,
+      select: (data) =>
+        data?.data?.salesData.map((item) => {
+          return {
+            ...item,
+            Percentage: parseFloat(item.Percentage?.toFixed(2)),
+          };
+        }),
     }
   );
   if (isLoading || isError) {

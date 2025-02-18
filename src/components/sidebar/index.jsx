@@ -1,5 +1,5 @@
 import React from "react";
-import { menuItems } from "../../constants";
+import { MENU_ITEMS } from "../../constants";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { UseCommon } from "../../hooks/UseCommon";
 
@@ -32,7 +32,7 @@ const Sidebar = () => {
           </button>
         </div>
         <ul className="flex flex-col h-full overflow-y-auto gap-y-2 font-light mt-4">
-          {menuItems.map((item) => (
+          {MENU_ITEMS.map((item) => (
             <Link
               key={item.id}
               to={item.id !== 9 && `/${branchName}${item.path}`}

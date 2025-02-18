@@ -44,12 +44,12 @@ function App() {
               <Route
                 path="/"
                 element={
-                  // <ProtectedRoute>
-                  <HomeLayout />
-                  // </ProtectedRoute>
+                  <ProtectedRoute>
+                    <HomeLayout />
+                  </ProtectedRoute>
                 }
               >
-                <Route path="branches" element={<BranchesTarget />} />
+                <Route index path="branches" element={<BranchesTarget />} />
                 <Route path="targetSettings" element={<TargetSettings />} />
               </Route>
               <Route path="/auth" element={<AuthLayout />}>

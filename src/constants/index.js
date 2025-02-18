@@ -1,4 +1,4 @@
-export const menuItems = [
+export const MENU_ITEMS = [
   {
     id: 1,
     title: "Dashboard Home",
@@ -47,15 +47,9 @@ export const menuItems = [
     icon: "settings.svg",
     path: "/reports/settings",
   },
-  {
-    id: 9,
-    title: "Sign Out",
-    icon: "logout.svg",
-    path: "/logout",
-  },
 ];
 
-export const cardsData = [
+export const CARDS_DATA = [
   {
     id: 1,
     title: "Income",

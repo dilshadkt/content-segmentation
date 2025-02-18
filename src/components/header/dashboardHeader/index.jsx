@@ -2,10 +2,9 @@ import React from "react";
 import DehazeIcon from "@mui/icons-material/Dehaze";
 import { UseCommon } from "../../../hooks/UseCommon";
 import LanguagePicker from "./CountryPicker";
-import { useParams } from "react-router-dom";
+import UserProfile from "./userProfile";
 const DashboardHeader = () => {
   const { isSideBarOpen, setSideBarOpen } = UseCommon();
-  const { branchName } = useParams();
   return (
     <div className="h-[70px] mt-4 grid grid-cols-5  px-4 md:px-10 ">
       <div className="col-span-2 relative">
@@ -35,29 +34,7 @@ const DashboardHeader = () => {
             <div className="w-2 h-2 rounded-full bg-[#EE6E6E] absolute -top-1 -right-1"></div>
           </button>
         </div> */}
-        <div className="flexEnd gap-x-3 ">
-          <div
-            className="w-[40px] aspect-square overflow-hidden 
-        flexCenter  rounded-full md:rounded-lg"
-          >
-            <img
-              src="/image/profile.png"
-              alt=""
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="flexStart gap-x-8">
-            <div className="md:flex hidden flex-col font-light text-sm">
-              <span className="text-[#8C79E5] font-medium capitalize">
-                {branchName}
-              </span>
-              <span className="text-xs text-[#726C6C]">Admin</span>
-            </div>
-            <button>
-              <img src="/icons/arrowDown.svg" alt="" />
-            </button>
-          </div>
-        </div>
+        <UserProfile />
       </div>
     </div>
   );

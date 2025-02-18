@@ -1,11 +1,11 @@
 import React from "react";
 import { formatAmount } from "../../../../lib/FormateAmount";
-import { cardsData } from "../../../../constants";
+import { CARDS_DATA } from "../../../../constants";
 
 const StatCards = ({ insightData }) => {
   return (
     <div className="h-full grid gap-y-3 md:grid-cols-3 gap-x-4">
-      {cardsData.map((data) => (
+      {CARDS_DATA.map((data) => (
         <div
           key={data.id}
           className={`rounded-xl p-3 gap-y-1  flex justify-center flex-col ${data.bgColor}`}

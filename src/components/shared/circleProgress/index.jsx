@@ -7,7 +7,7 @@ const CircularProgress = ({
   location = "ABU DHABI",
   subtitle = "Earnings Today",
 }) => {
-  const percentage = Math.min((currentValue / target) * 100, 100);
+  const percentage = Math.min((currentValue / target) * 100, 100) || 0;
   const size = 220;
   const strokeWidth = 8;
   const radius = (size - strokeWidth) / 2;
@@ -25,7 +25,7 @@ const CircularProgress = ({
       <span className="absolute top-3 left-4">
         🎯 Target
         <b className="mx-1 bg-gray-800 px-1 shadow-lg rounded-sm">
-          <i>2000</i>
+          <i>{target}</i>
         </b>{" "}
         AED
       </span>
@@ -102,7 +102,7 @@ const CircularProgress = ({
                   }}
                   className="font-semibold"
                 >
-                  {percentage.toFixed(2)}%
+                  {percentage?.toFixed(2)}%
                 </span>{" "}
                 Target Completed
               </p>
