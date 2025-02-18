@@ -27,10 +27,10 @@ const Header = ({ setShowCustomModal, date }) => {
             <img src="/icons/calender.svg" alt="" />
           </button>
         </div>
-        <button className="flexStart gap-x-2 border px-3 py-2 rounded-lg border-[#253A4D]">
+        {/* <button className="flexStart gap-x-2 border px-3 py-2 rounded-lg border-[#253A4D]">
           <img src="/icons/export.svg" alt="" />
           <span className="text-[#898384] text-sm">Export</span>
-        </button>
+        </button> */}
       </div>
     </div>
   );

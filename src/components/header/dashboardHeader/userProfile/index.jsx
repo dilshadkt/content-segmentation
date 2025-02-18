@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
+import { FaBuilding } from "react-icons/fa6";
 
 const UserProfile = () => {
   const { branchName } = useParams();
@@ -13,7 +14,8 @@ const UserProfile = () => {
 
   return (
     <div className="flexEnd gap-x-3  relative">
-      <div
+      <FaBuilding className="text-gray-200 text-2xl" />
+      {/* <div
         className="w-[40px] aspect-square overflow-hidden 
 flexCenter  rounded-full md:rounded-lg"
       >
@@ -22,7 +24,7 @@ flexCenter  rounded-full md:rounded-lg"
           alt=""
           className="w-full h-full object-cover"
         />
-      </div>
+      </div> */}
       <div className="flexStart gap-x-8">
         <div className="md:flex hidden flex-col font-light text-sm">
           <span className="text-[#8C79E5] font-medium capitalize">
