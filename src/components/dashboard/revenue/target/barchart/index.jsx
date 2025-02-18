@@ -1,7 +1,15 @@
 import React from "react";
 import { UseCommon } from "../../../../../hooks/UseCommon";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+} from "recharts";
 
-const TargetBarchart = ({ data }) => {
+const TargetBarchart = ({ data, graphClassName }) => {
   const { isFullScreenModalOpen } = UseCommon();
   return (
     <div className="flex  flex-col gap-y-3 h-full mt-12">

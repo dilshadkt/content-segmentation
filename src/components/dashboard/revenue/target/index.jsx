@@ -48,7 +48,7 @@ const TargetVsReality = ({ className, graphClassName, initialDate }) => {
         />
       );
     } else {
-      return <TargetBarchart data={data} />;
+      return <TargetBarchart data={data} graphClassName={graphClassName} />;
     }
   };
   return (

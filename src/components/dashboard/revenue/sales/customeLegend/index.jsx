@@ -1,3 +1,4 @@
+import { UseCommon } from "../../../../../hooks/UseCommon";
 export const CustomLegend = (props) => {
   const { payload } = props; // `payload` contains the legend items
   const { isSideBarOpen } = UseCommon();
