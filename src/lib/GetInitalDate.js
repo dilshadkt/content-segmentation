@@ -44,7 +44,7 @@ export const getInitailDate = (initialDate) => {
   }
 
   // Check This Month
-  const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 2);
   if (isSameDate(from, startOfMonth) && isSameDate(to, today)) {
     return "This Month";
   }

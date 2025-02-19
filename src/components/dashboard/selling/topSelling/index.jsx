@@ -8,7 +8,7 @@ import TopSellingDepartmentHeader from "./header";
 
 const TopSelling = ({ className, initialDate }) => {
   const today = new Date();
-  const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 2);
   const [date, setDate] = useState({
     from: initialDate?.from || startOfMonth.toISOString().split("T")[0],
     to: initialDate?.to || getFormattedDate(0),

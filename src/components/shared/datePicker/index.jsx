@@ -40,7 +40,7 @@ const DateSelector = ({ setDate, initialDate, dateOption = DATE_OPTIONS }) => {
     setIsOpen(false);
 
     const today = new Date();
-    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 2);
     const startOfQuarter = new Date(
       today.getFullYear(),
       Math.floor(today.getMonth() / 3) * 3,
