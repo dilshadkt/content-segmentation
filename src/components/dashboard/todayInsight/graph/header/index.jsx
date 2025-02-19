@@ -19,19 +19,19 @@ const InsightGraphHeader = ({ setDate, date }) => {
         }  gap-x-2`}
       >
         <div className="bg-[#313131] flexStart gap-x-2  px-3 rounded-sm">
-          <div className="w-[6px] h-[6px] rounded-full bg-[#1A9FFF]"></div>
+          <div className="w-[6px] h-[6px] rounded-full bg-[#4229B4]"></div>
           <span className="font-light text-xs 2xl:text-sm text-[#898384]">
             Revenue
           </span>
         </div>
         <div className="bg-[#313131] flexStart gap-x-2  px-3 rounded-sm">
-          <div className="w-[6px] h-[6px] rounded-full bg-[#6F57DE]"></div>
+          <div className="w-[6px] h-[6px] rounded-full bg-[#0B8C04]"></div>
           <span className="font-light text-xs 2xl:text-sm text-[#898384]">
             Profilt
           </span>
         </div>
         <div className="bg-[#313131] flexStart gap-x-2  px-3 rounded-sm">
-          <div className="w-[6px] h-[6px] rounded-full bg-[#2ECC71]"></div>
+          <div className="w-[6px] h-[6px] rounded-full bg-[#8C22C0]"></div>
           <span className="font-light text-xs 2xl:text-sm text-[#898384]">
             Expences
           </span>
