@@ -46,7 +46,7 @@ const DateSelector = ({ setDate, initialDate, dateOption = DATE_OPTIONS }) => {
       Math.floor(today.getMonth() / 3) * 3,
       1
     );
-    const startOfYear = new Date(today.getFullYear(), 0, 1);
+    const startOfYear = new Date(today.getFullYear(), 0, 2);
 
     let newDateRange = { ...dateRange };
 

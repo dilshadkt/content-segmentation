@@ -82,7 +82,7 @@ export const getInitailDate = (initialDate) => {
   }
 
   // Check This Year
-  const startOfYear = new Date(today.getFullYear(), 0, 1);
+  const startOfYear = new Date(today.getFullYear(), 0, 2);
   if (isSameDate(from, startOfYear) && isSameDate(to, today)) {
     return "This Year";
   }

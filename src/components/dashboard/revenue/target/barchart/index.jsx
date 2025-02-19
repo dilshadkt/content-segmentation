@@ -11,10 +11,17 @@ import {
 
 const TargetBarchart = ({ data, graphClassName }) => {
   const { isFullScreenModalOpen } = UseCommon();
+  const realitySales = Number(
+    data.reduce((sum, item) => sum + item["Reality Sales"], 0)
+  ).toFixed(2);
+  const targetSales = Number(
+    data.reduce((sum, item) => sum + item["Target Sales"], 0)
+  ).toFixed(2);
+
   return (
     <div className="flex  flex-col gap-y-3 h-full mt-12">
       <div
-        className={`w-full relative ${
+        className={`w-full relative  mt-3 ${
           !isFullScreenModalOpen && "h-[110px]"
         } ${graphClassName}`}
       >
@@ -60,7 +67,7 @@ const TargetBarchart = ({ data, graphClassName }) => {
       </div>
 
       <div className="flex flex-col gap-y-3 h-full p-3  ">
-        <div className="flexBetween">
+        <div className="grid grid-cols-3">
           <div className="flexCenter bg-[#1B1B1B] w-8 h-8 rounded-lg">
             <img src="/icons/realitySale.svg" alt="" />
           </div>
@@ -68,11 +75,13 @@ const TargetBarchart = ({ data, graphClassName }) => {
             <span className="text-sm text-[#8C79E5] font-semibold">
               Reality Sales
             </span>
-            <p className="text-xs text-[#9F9C9C]">Global</p>
+            {/* <p className="text-xs text-[#9F9C9C]">Global</p> */}
           </div>
-          <span className="text-sm text-[#2CC36B]">10.823</span>
+          <span className="text-sm text-end text-[#2CC36B]">
+            {realitySales}
+          </span>
         </div>
-        <div className="flexBetween">
+        <div className="grid grid-cols-3">
           <div className="flexCenter bg-[#1B1B1B] w-8 h-8 rounded-lg">
             <img src="/icons/targetSale.svg" alt="" />
           </div>
@@ -80,9 +89,9 @@ const TargetBarchart = ({ data, graphClassName }) => {
             <span className="text-sm text-[#8C79E5] font-semibold">
               Target Sales
             </span>
-            <p className="text-xs text-[#9F9C9C]">Commercial</p>
+            {/* <p className="text-xs text-[#9F9C9C]">Commercial</p> */}
           </div>
-          <span className="text-sm text-[#007AFF]">12.823</span>
+          <span className="text-sm text-[#007AFF] text-end">{targetSales}</span>
         </div>
       </div>
     </div>
