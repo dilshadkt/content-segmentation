@@ -9,7 +9,7 @@ import {
   LabelList,
 } from "recharts";
 import { UseCommon } from "../../../../../hooks/UseCommon";
-const COLORS = ["#9789FF", "#37F4E8"];
+const COLORS = ["#6F57DE", "#00C7BE"];
 const MovementGraph = ({ data }) => {
   const { isFullScreenModalOpen } = UseCommon();
   return (
@@ -85,10 +85,16 @@ const MovementGraph = ({ data }) => {
       <div className=" flexCenter absolute -bottom-4 left-0 right-0 mx-auto gap-x-6">
         {data?.map((item, index) => (
           <div key={index} className="flexStart gap-x-3">
-            <div className="w-2 h-2 rounded-full bg-[#6F57DE]"></div>
+            <div
+              style={{
+                background:
+                  item?.MovementCategory === "Moving" ? `#6F57DE` : `#00C7BE`,
+              }}
+              className="w-2 h-2 rounded-full "
+            ></div>
             <div className="flex flex-col">
               <span className="text-sm">{item?.MovementCategory}</span>
-              <span className="text-xs text-[#6F57DE]">{item?.ItemCount}</span>
+              <span className="text-xs text-[#6F8AD9]">{item?.ItemCount}</span>
             </div>
           </div>
         ))}

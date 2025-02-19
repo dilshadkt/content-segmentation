@@ -60,7 +60,7 @@ const SalesChart = ({ salesData, graphClassName }) => {
             fill="url(#colorThisWeek)"
             dot={true}
           />
-          <Legend content={<CustomLegend />} />{" "}
+          <Legend content={<CustomLegend salesData={salesData} />} />
         </AreaChart>
       </ResponsiveContainer>
     </div>

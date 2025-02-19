@@ -1,6 +1,16 @@
 import { UseCommon } from "../../../../../hooks/UseCommon";
 export const CustomLegend = (props) => {
-  const { payload } = props; // `payload` contains the legend items
+  const { payload, salesData } = props;
+  // Calculate total sales for "Last Week" and "This Week"
+  const totalLastWeek = salesData.reduce(
+    (sum, item) => sum + item["Last Week"],
+    0
+  );
+  const totalThisWeek = salesData.reduce(
+    (sum, item) => sum + item["This Week"],
+    0
+  );
+
   const { isSideBarOpen } = UseCommon();
   return (
     <ul
@@ -45,8 +55,8 @@ export const CustomLegend = (props) => {
       ))}
       <hr className="absolute left-0 right-3 top-2 mx-auto w-[1px] h-[20px] bg-[#BDC9D3]" />
       <div className="absolute left-0 gap-x-24 right-0 flexCenter text-xs font-light mx-auto top-5 ">
-        <span>$3,004</span>
-        <span>$3,004</span>
+        <span>{totalLastWeek}</span>
+        <span>{totalThisWeek}</span>
       </div>
     </ul>
   );
