@@ -39,6 +39,8 @@ const BranchList = ({ branches }) => {
     <>
       {branches?.map((branch) => (
         <CircularProgress
+          branchId={branch?.BranchID}
+          clientId={branch?.clientID}
           key={branch?.BranchID}
           currentValue={branch?.PercentageCompleted}
           target={branch?.TargetAmount}

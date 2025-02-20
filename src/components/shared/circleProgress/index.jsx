@@ -6,6 +6,8 @@ const CircularProgress = ({
   target = 2000,
   location = "ABU DHABI",
   subtitle = "Earnings Today",
+  branchId,
+  clientId,
 }) => {
   const percentage = Math.min((currentValue / target) * 100, 100) || 0;
   const size = 220;
@@ -18,7 +20,11 @@ const CircularProgress = ({
 
   return (
     <div
-      onClick={() => navigate(`/abudhabi/reports`)}
+      onClick={() => {
+        localStorage.setItem("branchId", branchId);
+        localStorage.setItem("clientId", clientId);
+        navigate(`/${branchId}/reports`);
+      }}
       className="w-full cursor-pointer bg-gray-700/20 rounded-xl
      backdrop-blur-md relative flexCenter flex-col py-14"
     >

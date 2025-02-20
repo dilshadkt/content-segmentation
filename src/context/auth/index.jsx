@@ -42,6 +42,7 @@ export const AuthProvider = ({ children }) => {
       );
       const { data: userData } = response.data;
       localStorage.setItem("user", JSON.stringify(userData));
+
       setUser(userData);
       setIsAuthenticated(true);
       return true;
