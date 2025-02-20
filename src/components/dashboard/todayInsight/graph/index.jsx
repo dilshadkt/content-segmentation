@@ -80,7 +80,7 @@ const TodayInsightGraph = ({
   if (isLoading || isError) {
     return (
       <NoDataLoading
-        isError={isError}
+        noData={noData}
         className="h-[290px] col-span-1 lg:col-span-2"
       />
     );

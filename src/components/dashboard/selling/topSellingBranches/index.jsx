@@ -3,6 +3,7 @@ import { UseCommon } from "../../../../hooks/UseCommon";
 import CloseIcon from "@mui/icons-material/Close";
 import { useQuery } from "react-query";
 import { topSellingBranches } from "../../../../api/dashbaord";
+import NoDataLoading from "../../../shared/loading";
 
 const TopSellingBranches = ({ className }) => {
   const {
@@ -11,9 +12,36 @@ const TopSellingBranches = ({ className }) => {
     setFullScreenGraph,
     setFullScreenModalOpen,
   } = UseCommon();
-  const { data: dummy } = useQuery("topSellingBranches", topSellingBranches, {
+  const {
+    data: dummy,
+    isLoading,
+    isError,
+  } = useQuery("topSellingBranches", topSellingBranches, {
     select: (data) => data?.data?.salesData,
   });
+  const noData = dummy?.every(
+    (item) => item.Branch === "" && item.DailyAverageSale === 0
+  );
+  if (isLoading || isError) {
+    return (
+      <NoDataLoading
+        isError={isError}
+        className={` ${
+          isSideBarOpen ? `col-span-1 2xl:col-span-2` : ` lg:col-span-2 `
+        } h-full `}
+      />
+    );
+  }
+  if (noData) {
+    return (
+      <NoDataLoading
+        noData={noData}
+        className={` min-h-[280px] ${
+          isSideBarOpen ? `col-span-1 2xl:col-span-2` : ` lg:col-span-2 `
+        }`}
+      />
+    );
+  }
 
   return (
     <section
