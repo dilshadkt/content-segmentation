@@ -26,12 +26,8 @@ const Login = () => {
       clientId: "",
     },
     validationSchema: Yup.object({
-      UserName: Yup.string()
-        .email("Invalid email address")
-        .required("E-mail is required"),
-      password: Yup.string()
-        .min(6, "Password must be atleast 6 characters")
-        .required("Password is required"),
+      UserName: Yup.string().required("E-mail is required"),
+      password: Yup.string().required("Password is required"),
       clientId: Yup.string().required("Client id is required"),
     }),
     onSubmit: async (values) => {
@@ -39,7 +35,9 @@ const Login = () => {
         await login({ ...values });
         navigate("/branches");
       } catch (error) {
-        setError(error?.message || "Failed to Login");
+        console.error(error);
+        localStorage.clear();
+        setError(error?.response?.data?.message || "Failed to Login");
       }
     },
   });
@@ -69,7 +67,7 @@ const Login = () => {
               name={"UserName"}
               touched={touched}
               values={values}
-              placeholder={"Email"}
+              placeholder={"User Name"}
               className={" outline-none bg-[#404040] w-full"}
             />
             <div>

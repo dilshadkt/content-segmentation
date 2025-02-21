@@ -40,9 +40,10 @@ const BranchList = ({ branches }) => {
       {branches?.map((branch) => (
         <CircularProgress
           branchId={branch?.BranchID}
-          clientId={branch?.clientID}
+          clientId={branch?.ClientID}
           key={branch?.BranchID}
           currentValue={branch?.PercentageCompleted}
+          todaySaleAmount={branch?.TodaySalesAmout}
           target={branch?.TargetAmount}
           location={branch?.BranchName}
           subtitle="Earnings Today"

@@ -1,20 +1,22 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL:
-    "https://forzareport-gpbhfsbshdfvhuh8.eastus-01.azurewebsites.net//api/", // Backend base URL
-  withCredentials: true, // To include cookies in requests
+  baseURL: "https://forzainsightsapi.scanntek.com/api/", // Backend base URL
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Request interceptor to dynamically add clientId or branchId to headers
+// Request interceptor to dynamically add clientId, branchId, and Authorization token
 API.interceptors.request.use(
   (config) => {
+    const token = localStorage.getItem("token");
     const clientId = localStorage.getItem("clientId");
     const branchId = localStorage.getItem("branchId");
 
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
     if (clientId) {
       config.headers["clientID"] = clientId;
     }
@@ -34,8 +36,7 @@ API.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error?.response?.status === 401) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
+      localStorage.clear();
       window.location.href = "/auth/login";
     }
     return Promise.reject(error);

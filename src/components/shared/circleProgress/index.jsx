@@ -8,6 +8,7 @@ const CircularProgress = ({
   subtitle = "Earnings Today",
   branchId,
   clientId,
+  todaySaleAmount,
 }) => {
   const percentage = Math.min((currentValue / target) * 100, 100) || 0;
   const size = 220;
@@ -118,7 +119,7 @@ const CircularProgress = ({
                 }}
                 className={`text-2xl font-bold mt-2 `}
               >
-                {currentValue}
+                {todaySaleAmount?.toFixed()}
               </p>
               <p className="text-sm text-gray-500">{subtitle}</p>
             </div>

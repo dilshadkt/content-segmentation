@@ -6,8 +6,13 @@ const HomeLayout = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   useEffect(() => {
+    const token = localStorage.getItem("token");
     if (pathname === "/") {
-      navigate("/branches");
+      if (token) {
+        return navigate("/branches");
+      } else {
+        return navigate("/auth/login");
+      }
     }
   }, []);
   return (

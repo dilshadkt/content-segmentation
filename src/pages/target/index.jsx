@@ -58,7 +58,7 @@ const TargetSettings = () => {
     setSelectedBranch(branch);
   };
   if (isLoading) {
-    return <h1 className="text-white">Loading......</h1>;
+    return <div className="text-white w-full h-full flexCenter"></div>;
   }
 
   return (

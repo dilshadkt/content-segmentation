@@ -8,23 +8,13 @@ const UserProfile = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setMenuOpen] = useState(false);
   const handleLogout = () => {
-    Cookies.remove("authToken");
+    localStorage.clear();
     navigate("/auth/login");
   };
 
   return (
     <div className="flexEnd gap-x-3  relative">
       <FaBuilding className="text-gray-200 text-2xl" />
-      {/* <div
-        className="w-[40px] aspect-square overflow-hidden 
-flexCenter  rounded-full md:rounded-lg"
-      >
-        <img
-          src="/image/profile.png"
-          alt=""
-          className="w-full h-full object-cover"
-        />
-      </div> */}
       <div className="flexStart gap-x-8">
         <div className="md:flex hidden flex-col font-light text-sm">
           <span className="text-[#8C79E5] font-medium capitalize">
