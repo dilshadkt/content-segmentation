@@ -17,8 +17,8 @@ const SalesChart = ({ salesData, graphClassName }) => {
         <AreaChart
           data={salesData}
           margin={{
-            left: -52,
-            right: -8,
+            left: -45,
+            right: 15,
             bottom: -4,
           }}
         >
@@ -35,10 +35,11 @@ const SalesChart = ({ salesData, graphClassName }) => {
           </defs>
           {/* Axes */}
           <XAxis
-            dataKey="Name "
+            dataKey="Name"
+            tick={{ fontSize: 12, fill: "#666" }}
             tickLine={false}
             axisLine={false}
-            tick={false}
+            tickFormatter={(name) => name.substring(0, 3)}
           />
           <YAxis tickLine={false} axisLine={false} tick={false} />
           {/* Tooltip and Legend */}

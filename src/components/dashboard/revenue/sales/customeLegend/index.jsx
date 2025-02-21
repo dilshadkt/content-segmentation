@@ -19,7 +19,7 @@ export const CustomLegend = (props) => {
         listStyle: "none",
         padding: 0,
       }}
-      className={` flexCenter relative  -translate-y-4 ${
+      className={` flexCenter relative   ${
         isSideBarOpen ? `gap-x-3` : `gap-x-8`
       }  ml-20`}
     >

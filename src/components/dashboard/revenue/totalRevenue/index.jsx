@@ -6,9 +6,11 @@ import NoDataLoading from "../../../shared/loading";
 import { getFormattedDate } from "../../../../lib/GetFormatedDate";
 import Barchart from "./barchart";
 import RevenueHeader from "./header";
+import { useParams } from "react-router-dom";
 
 const TotalRevenueBarChart = ({ className, graphClassName, initialDate }) => {
   const { isSideBarOpen } = UseCommon();
+  const { branchName } = useParams();
   const today = new Date();
   const dayOfWeek = today.getDay();
   const [date, setDate] = useState({
@@ -19,7 +21,7 @@ const TotalRevenueBarChart = ({ className, graphClassName, initialDate }) => {
     isLoading,
     data: revenueData,
     isError,
-  } = useQuery(["totalRevenue", date], () => totalRevenue(date), {
+  } = useQuery(["totalRevenue", date, branchName], () => totalRevenue(date), {
     select: (data) => data?.data?.revenue,
   });
 

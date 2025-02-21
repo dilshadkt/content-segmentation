@@ -4,6 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useQuery } from "react-query";
 import { topSellingBranches } from "../../../../api/dashbaord";
 import NoDataLoading from "../../../shared/loading";
+import { useParams } from "react-router-dom";
 
 const TopSellingBranches = ({ className }) => {
   const {
@@ -12,11 +13,12 @@ const TopSellingBranches = ({ className }) => {
     setFullScreenGraph,
     setFullScreenModalOpen,
   } = UseCommon();
+  const { branchName } = useParams();
   const {
     data: dummy,
     isLoading,
     isError,
-  } = useQuery("topSellingBranches", topSellingBranches, {
+  } = useQuery(["topSellingBranches", branchName], topSellingBranches, {
     select: (data) => data?.data?.salesData,
   });
   const noData = dummy?.every(

@@ -14,11 +14,12 @@ const MovementGraph = ({ data }) => {
   const { isFullScreenModalOpen } = UseCommon();
   return (
     <div
-      className={`relative flex flex-col h-[270px] mb-4 md:h-full gap-y-2 mt-6`}
+      className={`relative  flex flex-col  min-h-[240px]  md:h-full gap-y-2 mt-2`}
     >
       <ResponsiveContainer
         width="100%"
         height={isFullScreenModalOpen ? 190 : "100%"}
+        className={" mb-4"}
       >
         <PieChart>
           <Pie
@@ -82,7 +83,7 @@ const MovementGraph = ({ data }) => {
           <Tooltip />
         </PieChart>
       </ResponsiveContainer>
-      <div className=" flexCenter absolute -bottom-4 left-0 right-0 mx-auto gap-x-6">
+      <div className=" flexCenter  w-full  -bottom-4 left-0 right-0 mx-auto gap-x-6">
         {data?.map((item, index) => (
           <div key={index} className="flexStart gap-x-3">
             <div

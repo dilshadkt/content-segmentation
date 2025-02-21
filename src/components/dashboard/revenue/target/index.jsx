@@ -6,17 +6,18 @@ import { getFormattedDate } from "../../../../lib/GetFormatedDate";
 import NoDataLoading from "../../../shared/loading";
 import TargetBarchart from "./barchart";
 import TargetHeader from "./header";
+import { useParams } from "react-router-dom";
 
 const TargetVsReality = ({ className, graphClassName, initialDate }) => {
   const today = new Date();
   const startOfYear = new Date(today.getFullYear(), 0, 2);
-
+  const { branchName } = useParams();
   const [date, setDate] = useState({
     from: initialDate?.from || startOfYear.toISOString().split("T")[0],
     to: initialDate?.to || getFormattedDate(0),
   });
   const { data, isLoading, isError } = useQuery(
-    ["targetVsReality", date],
+    ["targetVsReality", date, branchName],
     () => targetVsReality(date),
     {
       select: (data) => data?.data?.salesData,

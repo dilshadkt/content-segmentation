@@ -24,7 +24,7 @@ const CircularProgress = ({
       onClick={() => {
         localStorage.setItem("branchId", branchId);
         localStorage.setItem("clientId", clientId);
-        navigate(`/${branchId}/reports`);
+        navigate(`/${location}/reports`);
       }}
       className="w-full cursor-pointer bg-gray-700/20 rounded-xl
      backdrop-blur-md relative flexCenter flex-col py-14"

@@ -9,14 +9,14 @@ const DashboardHeader = () => {
     <div className="h-[70px] mt-4 grid grid-cols-5  px-4 md:px-10 ">
       <div className="col-span-2 relative">
         {/* <LanguagePicker /> */}
-        {!isSideBarOpen && (
+        {/* {!isSideBarOpen && (
           <button
             className="absolute hidden md:block  top-0 bottom-0 my-auto left-0"
             onClick={() => setSideBarOpen(true)}
           >
             <DehazeIcon />
           </button>
-        )}
+        )} */}
       </div>
       <div className="col-span-3 flexEnd md:flexBetween">
         <div></div> {/*dummy for ui*/}

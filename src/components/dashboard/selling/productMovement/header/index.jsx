@@ -7,7 +7,7 @@ const MovementHeader = ({ date, setDate }) => {
   const { isFullScreenModalOpen, setFullScreenModalOpen, setFullScreenGraph } =
     UseCommon();
   return (
-    <div className="absolute top-4  flexBetween  left-0 pl-7 pr-5 right-0 w-full ">
+    <div className="  flexBetween pl-7 pr-5 right-0 w-full ">
       <span className="text-[#9F9C9C] font-semibold">Product Movement </span>
       <div className="flexEnd gap-x-4">
         <DateSelector setDate={setDate} initialDate={date} />

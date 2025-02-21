@@ -7,17 +7,19 @@ import NoDataLoading from "../../../shared/loading";
 import { getFormattedDate } from "../../../../lib/GetFormatedDate";
 import MovementHeader from "./header";
 import MovementGraph from "./movementGraph";
+import { useParams } from "react-router-dom";
 
 const ProductMovement = ({ className, graphClassName, initialDate }) => {
   const today = new Date();
   const dayOfWeek = today.getDay();
+  const { branchName } = useParams();
   const [date, setDate] = useState({
     from: initialDate?.from || getFormattedDate(dayOfWeek),
     to: initialDate?.to || getFormattedDate(0),
   });
   const { isSideBarOpen } = UseCommon();
   const { data, isLoading, isError } = useQuery(
-    ["productMovement", date],
+    ["productMovement", date, branchName],
     () => productMovement(date),
     {
       select: (data) =>
@@ -59,10 +61,10 @@ const ProductMovement = ({ className, graphClassName, initialDate }) => {
     <section
       className={` ${
         isSideBarOpen ? `col-span-1 2xl:col-span-2` : `lg:col-span-2`
-      } bg-[#0D0D0D] flex flex-col   rounded-xl p-6 relative ${className}`}
+      } bg-[#0D0D0D] flex flex-col    rounded-xl p-6 relative ${className}`}
     >
-      {renderContent()}
       <MovementHeader date={date} setDate={setDate} />
+      {renderContent()}
     </section>
   );
 };

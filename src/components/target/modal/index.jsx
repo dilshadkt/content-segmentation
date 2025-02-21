@@ -11,7 +11,6 @@ const TargetSettingsModal = ({
 }) => {
   const { formik, handleCheckboxChange, handleSelectAllDays, isSubmitting } =
     useTargetSettingsForm(selectedBranch, () => setSettingsMenuOpen(false));
-
   //  helper for close modal
   const handleClose = () => {
     formik.resetForm();
@@ -36,7 +35,7 @@ const TargetSettingsModal = ({
         className="p-10 py-7 bg-black relative rounded-lg w-[540px]"
       >
         {/* header  */}
-        <h4 className="mb-5 text-gray-400">{selectedBranch?.name} 🎯</h4>
+        <h4 className="mb-5 text-gray-400">{selectedBranch?.branchName} 🎯</h4>
         {/* day selection  */}
         <div className="w-full grid grid-cols-2">
           <ul className="flex flex-col gap-y-3">

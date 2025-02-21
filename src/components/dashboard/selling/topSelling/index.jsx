@@ -5,6 +5,7 @@ import { getFormattedDate } from "../../../../lib/GetFormatedDate";
 import NoDataLoading from "../../../shared/loading";
 import SellingGraph from "./graph";
 import TopSellingDepartmentHeader from "./header";
+import { useParams } from "react-router-dom";
 
 const TopSelling = ({ className, initialDate }) => {
   const today = new Date();
@@ -13,8 +14,9 @@ const TopSelling = ({ className, initialDate }) => {
     from: initialDate?.from || startOfMonth.toISOString().split("T")[0],
     to: initialDate?.to || getFormattedDate(0),
   });
+  const { branchName } = useParams();
   const { data, isLoading, isError } = useQuery(
-    ["topSellingDepartment", date],
+    ["topSellingDepartment", date, branchName],
     () => topSellingDepartment(date),
     {
       select: (data) => data?.data?.salesData,

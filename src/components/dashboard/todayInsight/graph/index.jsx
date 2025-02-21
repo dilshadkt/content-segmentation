@@ -12,6 +12,7 @@ import { insightGraph } from "../../../../api/dashbaord";
 import { getFormattedDate } from "../../../../lib/GetFormatedDate";
 import NoDataLoading from "../../../shared/loading";
 import InsightGraphHeader from "./header";
+import { useParams } from "react-router-dom";
 
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload?.length) {
@@ -55,6 +56,7 @@ const TodayInsightGraph = ({
   initialDate,
 }) => {
   const today = new Date();
+  const { branchName } = useParams();
   const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 2);
   const [date, setDate] = useState({
     from: initialDate?.from || startOfMonth.toISOString().split("T")[0],
@@ -63,7 +65,7 @@ const TodayInsightGraph = ({
   const [hoveredLine, setHoveredLine] = useState(null);
 
   const { data, isLoading, isError } = useQuery(
-    ["insightGraph", date],
+    ["insightGraph", date, branchName],
     () => insightGraph(date),
     {
       select: (data) =>
@@ -73,6 +75,29 @@ const TodayInsightGraph = ({
         })),
     }
   );
+
+  // Calculate Y-axis ticks based on data
+  const calculateYAxisTicks = (data) => {
+    const maxValue = Math.max(
+      ...data?.map((item) =>
+        Math.max(item.Revenue || 0, item.Profit || 0, item.Expenses || 0)
+      )
+    );
+
+    if (maxValue === 0) return [0];
+
+    const step = maxValue / 5;
+    return Array.from({ length: 6 }, (_, i) => Number((i * step).toFixed(2)));
+  };
+
+  // Format large numbers
+  const formatYAxis = (value) => {
+    // if (value >= 1000) {
+    //   return `${(value / 1000).toFixed(1)}k`;
+    // }
+    return value.toFixed(0);
+  };
+
   const noData = data?.every(
     (item) => item.Revenue === 0 && item.Profit === 0 && item.Expenses === 0
   );
@@ -85,7 +110,7 @@ const TodayInsightGraph = ({
       />
     );
   }
-
+  const yAxisTicks = calculateYAxisTicks(data);
   const renderContent = () => {
     if (noData) {
       return (
@@ -118,7 +143,9 @@ const TodayInsightGraph = ({
                 domain={[0, "dataMax"]}
                 stroke="#59588D"
                 axisLine={false}
+                ticks={yAxisTicks}
                 tickLine={false}
+                tickFormatter={formatYAxis}
               />
               <Tooltip
                 content={<CustomTooltip />}

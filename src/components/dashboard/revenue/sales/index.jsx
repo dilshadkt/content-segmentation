@@ -7,9 +7,11 @@ import NoDataLoading from "../../../shared/loading";
 
 import SalesChart from "./areaChart";
 import SalesHeader from "./header";
+import { useParams } from "react-router-dom";
 
 const SalesAreaChart = ({ className, graphClassName, initialDate }) => {
   const today = new Date();
+  const { branchName } = useParams();
   const dayOfWeek = today.getDay();
   const [date, setDate] = useState({
     from: initialDate?.from || getFormattedDate(dayOfWeek),
@@ -19,7 +21,7 @@ const SalesAreaChart = ({ className, graphClassName, initialDate }) => {
     data: salesData,
     isLoading,
     isError,
-  } = useQuery(["saleData", date], () => totalSales(date), {
+  } = useQuery(["saleData", date, branchName], () => totalSales(date), {
     select: (data) => data?.data?.salesData,
   });
 

@@ -6,9 +6,11 @@ import CustomeDateModal from "../../shared/datePicker/customePicker";
 import NoDataLoading from "../../shared/loading";
 import Header from "./header";
 import StatCards from "./statCards";
+import { useParams } from "react-router-dom";
 
 const TodayInsight = ({ className }) => {
   const today = new Date();
+  const { branchName } = useParams();
   const formattedDate = today.toISOString().split("T")[0];
   const [date, setDate] = useState({
     from: formattedDate,
@@ -23,7 +25,7 @@ const TodayInsight = ({ className }) => {
     data: insightData,
     isLoading,
     isError,
-  } = useQuery(["insight", date], () => insight(date), {
+  } = useQuery(["insight", date, branchName], () => insight(date), {
     select: (data) => data?.data?.insight?.[0],
     onSuccess: () => setShowCustomModal(false),
   });
@@ -42,7 +44,11 @@ const TodayInsight = ({ className }) => {
   }
 
   const renderContent = () => {
-    if (!insightData?.Expense && !insightData?.Income && !insightData?.GP) {
+    if (
+      insightData?.Expense === null &&
+      insightData?.Income === null &&
+      insightData?.GP === null
+    ) {
       return (
         <NoDataLoading
           noData={true}
