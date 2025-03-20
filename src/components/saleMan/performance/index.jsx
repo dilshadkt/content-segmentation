@@ -1,34 +1,5 @@
 import React from "react";
-const data = {
-  week1: {
-    sale: "200",
-    growth: "20%",
-  },
-  week2: {
-    sale: "200",
-    growth: "20%",
-  },
-  week3: {
-    sale: "200",
-    growth: "20%",
-  },
-  week4: {
-    sale: "200",
-    growth: "20%",
-  },
-  week5: {
-    sale: "200",
-    growth: "20%",
-  },
-  week6: {
-    sale: "200",
-    growth: "20%",
-  },
-  week7: {
-    sale: "200",
-    growth: "20%",
-  },
-};
+
 const Perfomance = () => {
   return (
     <div className="flex flex-col gap-y-3 w-full max-h-[460px] overflow-y-auto">

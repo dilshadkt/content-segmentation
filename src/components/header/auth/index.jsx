@@ -8,7 +8,7 @@ const AuthHeader = () => {
         className="w-[45px] flexCenter aspect-square text-[10px] text-white rounded-lg bg-gradient-to-r 
 from-[#8909C8] to-[#361DA7]"
       >
-        FORZA
+        AROMA
       </div>
       <button className="text-gray-600 hover:text-white transition-all duration-300">
         <WbSunnyIcon />

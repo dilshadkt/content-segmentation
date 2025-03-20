@@ -16,41 +16,38 @@ const BranchTargetsTable = ({
             >
               Branch name
             </th>
-            {weekTarget?.[0]?.weekTargets &&
-              Object?.keys(weekTarget?.[0]?.weekTargets)?.map((dayName) => (
-                <th
-                  key={dayName}
-                  className="p-3 border font-normal text-sm text-gray-400 border-gray-600/50 text-center"
-                  colSpan={2}
-                >
-                  {dayName}
-                </th>
-              ))}
+            {Object.keys(weekTarget[0].weekTargets).map((dayName) => (
+              <th
+                key={dayName}
+                className="p-3 border font-normal text-sm text-gray-400 border-gray-600/50 text-center"
+                colSpan={2}
+              >
+                {dayName}
+              </th>
+            ))}
           </tr>
           <tr>
-            {weekTarget?.[0]?.weekTargets &&
-              Object.keys(weekTarget[0].weekTargets).map((dayName) => (
-                <React.Fragment key={`${dayName}-targets`}>
-                  <th className="text-yellow-700 whitespace-nowrap p-2 border border-gray-600/50 text-sm font-medium">
-                    Min target
-                  </th>
-                  <th className="p-2 text-green-700 border border-gray-600/50 text-sm font-medium">
-                    Target
-                  </th>
-                </React.Fragment>
-              ))}
-            {}
+            {Object.keys(weekTarget[0].weekTargets).map((dayName) => (
+              <React.Fragment key={`${dayName}-targets`}>
+                <th className="text-yellow-700 whitespace-nowrap p-2 border border-gray-600/50 text-sm font-medium">
+                  Min target
+                </th>
+                <th className="p-2 text-green-700 border border-gray-600/50 text-sm font-medium">
+                  Target
+                </th>
+              </React.Fragment>
+            ))}
           </tr>
         </thead>
         <tbody>
-          {weekTarget.map((branch, index) => {
+          {weekTarget.map((branch) => {
             let firstNullFound = false;
 
             return (
               <tr
-                key={index}
+                key={branch.name}
                 className={`${
-                  branch.branchName === currentBranch
+                  branch.name === currentBranch
                     ? `bg-blue-800`
                     : `bg-gray-800 hover:bg-gray-700`
                 }`}
@@ -69,7 +66,7 @@ const BranchTargetsTable = ({
                       <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                     </svg>
                   </button>
-                  {branch.branchName}
+                  {branch.name}
                 </td>
 
                 {Object.entries(branch.weekTargets).map(
@@ -83,10 +80,10 @@ const BranchTargetsTable = ({
                     }
 
                     return (
-                      <React.Fragment key={`${branch.branchName}-${dayName}`}>
+                      <React.Fragment key={`${branch.name}-${dayName}`}>
                         <td
                           className={`p-3 border border-gray-600 text-center ${
-                            isFirstNull && branch.branchName === currentBranch
+                            isFirstNull && branch.name === currentBranch
                               ? "bg-black  border-2 border-dashed border-white text-white"
                               : "text-blue-400"
                           }`}
@@ -97,7 +94,7 @@ const BranchTargetsTable = ({
                         </td>
                         <td
                           className={`p-3 border border-gray-600 text-center ${
-                            isFirstNull && branch.branchName === currentBranch
+                            isFirstNull && branch.name === currentBranch
                               ? "bg-black border-2 border-dashed border-white text-white"
                               : ""
                           }`}

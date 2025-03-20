@@ -10,28 +10,18 @@ import {
 } from "recharts";
 import CloseIcon from "@mui/icons-material/Close";
 import { UseCommon } from "../../../hooks/UseCommon";
-import NoDataLoading from "../../shared/loading";
+
+const data = [
+  { name: "Moving Items", value: 40 },
+  { name: "Slow Moving", value: 20 },
+  { name: "Slow Moving", value: 40 },
+];
 
 const COLORS = ["#EDA145", "#00C7BE", "#FFCC00"];
 
-const OverAllPerfomance = ({
-  className,
-  graphClassName,
-  data,
-  isLoading,
-  isError,
-}) => {
+const OverAllPerfomance = ({ className, graphClassName }) => {
   const { isSideBarOpen, isFullScreenModalOpen, setFullScreenModalOpen } =
     UseCommon();
-
-  if (isLoading || isError) {
-    return (
-      <NoDataLoading
-        isError={isError}
-        className="min-h-[380px] lg:col-span-3"
-      />
-    );
-  }
   return (
     <section
       className={` ${
@@ -56,18 +46,31 @@ const OverAllPerfomance = ({
           <h5 className="md:text-lg  text-[#9F9C9C]">Total Covered Sale</h5>
           <span className="md:text-lg">33300 AED</span>
           <ul className="flex md:flex-col gap-4">
-            {data?.map((item, index) => (
+            {[
+              {
+                title: "Monthly",
+                color: "#31D7DD",
+              },
+              {
+                title: "Weekly",
+                color: "#F68058",
+              },
+              {
+                title: "Daily",
+                color: "#F8E27F",
+              },
+            ].map((item, index) => (
               <li
                 key={index}
                 className="flexStart text-sm md:text-base font-light text-gray-300 gap-x-3"
               >
                 <span
                   style={{
-                    background: COLORS[index],
+                    background: item.color,
                   }}
                   className="w-3 rounded-[2px]  aspect-square"
                 ></span>{" "}
-                {item?.PaymentMode}
+                {item.title}
               </li>
             ))}
           </ul>
@@ -82,19 +85,19 @@ const OverAllPerfomance = ({
                 data={data}
                 innerRadius={isFullScreenModalOpen ? 88 : 68}
                 outerRadius={isFullScreenModalOpen ? 125 : 105}
-                dataKey="PaymentPercentage"
+                dataKey="value"
                 paddingAngle={4}
                 stroke="none"
                 cornerRadius={7}
               >
-                {data?.map((entry, index) => (
+                {data.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
                     fill={COLORS[index]}
                     filter={`drop-shadow(0 0 3px ${COLORS[index]})`}
                   >
                     <Label
-                      value={entry?.PaymentPercentage?.toLocaleString()}
+                      value={entry.value.toLocaleString()}
                       position="center"
                       fill="#fff"
                       style={{
@@ -115,10 +118,10 @@ const OverAllPerfomance = ({
                   }}
                 />
                 <Label
-                  // value={"900AED"}
-                  value={data
-                    ?.reduce((sum, entry) => sum + entry.TotalSales, 0)
-                    .toLocaleString()}
+                  value={"900AED"}
+                  //   value={data
+                  //     .reduce((sum, entry) => sum + entry.value, 0)
+                  //     .toLocaleString()}
                   position="center"
                   dy={20}
                   style={{
@@ -129,7 +132,7 @@ const OverAllPerfomance = ({
                   }}
                 />
                 <LabelList
-                  dataKey="PaymentPercentage"
+                  dataKey="value"
                   position="inside"
                   fill="#fff"
                   formatter={(value) => `${value.toLocaleString()}%`}

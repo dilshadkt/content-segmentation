@@ -1,38 +1,28 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 const CircularProgress = ({
   currentValue = 0,
   target = 2000,
   location = "ABU DHABI",
   subtitle = "Earnings Today",
-  branchId,
-  clientId,
-  todaySaleAmount,
 }) => {
-  const percentage = Math.min((currentValue / target) * 100, 100) || 0;
+  const percentage = Math.min((currentValue / target) * 100, 100);
   const size = 220;
   const strokeWidth = 8;
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
   const pathColor = currentValue >= target ? "#22c55e" : "#f11f1f";
-  const navigate = useNavigate();
 
   return (
     <div
-      onClick={() => {
-        localStorage.setItem("branchId", branchId);
-        localStorage.setItem("clientId", clientId);
-        navigate(`/${location}/reports`);
-      }}
-      className="w-full cursor-pointer bg-gray-700/20 rounded-xl
+      className="w-full bg-gray-700/20 rounded-xl
      backdrop-blur-md relative flexCenter flex-col py-14"
     >
       <span className="absolute top-3 left-4">
         🎯 Target
         <b className="mx-1 bg-gray-800 px-1 shadow-lg rounded-sm">
-          <i>{target}</i>
+          <i>2000</i>
         </b>{" "}
         AED
       </span>
@@ -109,7 +99,7 @@ const CircularProgress = ({
                   }}
                   className="font-semibold"
                 >
-                  {percentage?.toFixed(2)}%
+                  {percentage.toFixed(2)}%
                 </span>{" "}
                 Target Completed
               </p>
@@ -119,7 +109,7 @@ const CircularProgress = ({
                 }}
                 className={`text-2xl font-bold mt-2 `}
               >
-                {todaySaleAmount?.toFixed()}
+                {currentValue}
               </p>
               <p className="text-sm text-gray-500">{subtitle}</p>
             </div>

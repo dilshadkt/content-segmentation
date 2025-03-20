@@ -1,5 +1,5 @@
 import React from "react";
-import clsx from "clsx";
+
 const CustomeInput = ({
   values,
   handleChange,
@@ -10,11 +10,9 @@ const CustomeInput = ({
   type = "text",
   className,
   placeholder,
-  title = null,
 }) => {
   return (
-    <div className="flex flex-col gap-y-2">
-      {title && <span className="text-gray-500  text-sm">{title}</span>}
+    <div>
       <div className="relative ">
         <input
           type={type}
@@ -22,7 +20,7 @@ const CustomeInput = ({
           value={values[name]}
           onChange={handleChange}
           onBlur={handleBlur}
-          className={clsx(`p-3 px-4  rounded-xl `, className)}
+          className={`p-3 px-4 outline-none bg-[#404040] rounded-xl  w-full ${className}`}
           placeholder={placeholder}
         />
         {touched[name] && errors[name] && (

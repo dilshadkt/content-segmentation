@@ -8,40 +8,18 @@ import {
   Label,
   LabelList,
 } from "recharts";
+import CloseIcon from "@mui/icons-material/Close";
 import { UseCommon } from "../../../hooks/UseCommon";
-import NoDataLoading from "../../shared/loading";
 
 const COLORS = ["#BC277E", "#00C7BE", "#F68058", "#F8E27F"];
 
-const CashierPerformance = ({
-  className,
-  listClassName,
-  graphClassName,
-  data,
-  isLoading,
-  isError,
-}) => {
-  const noData = data?.every(
-    (item) => item.Amount === null && item.Percentage === null
-  );
-  const { isSideBarOpen, isFullScreenModalOpen } = UseCommon();
-  if (isLoading || isError) {
-    return (
-      <NoDataLoading
-        isError={isError}
-        className="h-[380px] col-span-1 lg:col-span-2"
-      />
-    );
-  }
-
-  if (noData) {
-    return (
-      <NoDataLoading
-        noData={noData}
-        className="h-full col-span-1 pt-6 lg:col-span-2"
-      />
-    );
-  }
+const CashierPerformance = ({ className, graphClassName, data }) => {
+  const { isSideBarOpen, isFullScreenModalOpen, setFullScreenModalOpen } =
+    UseCommon();
+  const filteredData = data?.map((item) => ({
+    ...item,
+    value: Number(item.value),
+  }));
   return (
     <section
       className={` ${
@@ -61,12 +39,12 @@ const CashierPerformance = ({
         </div>
       )}
       <div
-        className={`relative grid  ${
+        className={`relative grid ${
           isSideBarOpen ? ` grid-cols-3 xl:grid-cols-2` : ` grid-cols-2`
         }   min-h-[340px]  md:h-full gap-y-2 `}
       >
         <div className="flex text-[#FAFAFA] flex-col gap-y-4 justify-center">
-          <div className={`grid gap-y-4 ${listClassName}`}>
+          <div className="grid gap-y-4 xl:grid-cols-2">
             <div className="flex flex-col gap-y-5">
               <div className="flexStart gap-x-2">
                 <div className="w-3 aspect-square rounded-[3px] bg-[#F68058]"></div>
@@ -92,7 +70,7 @@ const CashierPerformance = ({
         <div
           className={`${
             isSideBarOpen ? ` col-span-2 xl:col-span-1` : `col-span-1`
-          } flexCenter  h-full ${graphClassName}`}
+          } flexCenter  h-full`}
         >
           <ResponsiveContainer
             width="100%"
@@ -100,22 +78,22 @@ const CashierPerformance = ({
           >
             <PieChart>
               <Pie
-                data={data}
+                data={filteredData}
                 innerRadius={isFullScreenModalOpen ? 68 : 58}
                 outerRadius={isFullScreenModalOpen ? 105 : 95}
-                dataKey="Percentage"
+                dataKey="value"
                 paddingAngle={4}
                 stroke="none"
                 cornerRadius={7}
               >
-                {data?.map((entry, index) => (
+                {data.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
                     fill={COLORS[index]}
                     filter={`drop-shadow(0 0 3px ${COLORS[index]})`}
                   >
                     <Label
-                      value={entry?.Percentage?.toLocaleString()}
+                      value={entry.value.toLocaleString()}
                       position="center"
                       fill="#fff"
                       style={{
@@ -136,10 +114,10 @@ const CashierPerformance = ({
                   }}
                 />
                 <Label
-                  // value={"900AED"}
-                  value={data
-                    ?.reduce((sum, entry) => sum + entry.Amount, 0)
-                    .toLocaleString()}
+                  value={"900AED"}
+                  //   value={data
+                  //     .reduce((sum, entry) => sum + entry.value, 0)
+                  //     .toLocaleString()}
                   position="center"
                   dy={20}
                   style={{
@@ -150,7 +128,7 @@ const CashierPerformance = ({
                   }}
                 />
                 <LabelList
-                  dataKey="Percentage"
+                  dataKey="value"
                   position="inside"
                   fill="#fff"
                   formatter={(value) => `${value.toLocaleString()}%`}
