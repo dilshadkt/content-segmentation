@@ -50,7 +50,7 @@ const DashboardHome = () => {
         <div
           className={`${
             isSideBarOpen ? `col-span-1 2xl:col-span-5` : `lg:col-span-5`
-          }  md:hidden lg:block `}
+          }  md:hidden lg:block  min-h-[320px]`}
         >
           <TopSelling />
         </div>

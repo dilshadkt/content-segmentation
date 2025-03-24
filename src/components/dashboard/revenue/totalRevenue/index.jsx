@@ -39,7 +39,7 @@ const TotalRevenueBarChart = ({ className, graphClassName }) => {
     <section
       className={` ${
         isSideBarOpen ? `col-span-1 2xl:col-span-3` : ` lg:h-full lg:col-span-3`
-      } h-[290px]  
+      } min-h-[290px]  
      relative flex items-end justify-start bg-[#0D0D0D] rounded-xl p-6 ${className}`}
     >
       {isFullScreenModalOpen && (
@@ -81,7 +81,7 @@ const TotalRevenueBarChart = ({ className, graphClassName }) => {
             <DateSelector
               setDate={setDate}
               initialDate={date}
-              dateOption={["This Week", "Previous Week"]}
+              dateOption={["This Week", "Previous Week", "Custom"]}
             />
             <button
               onClick={() =>

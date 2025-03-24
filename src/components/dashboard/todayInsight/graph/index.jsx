@@ -39,7 +39,7 @@ const CustomTooltip = ({ active, payload }) => {
                 style={{ backgroundColor: item.color }}
                 className="w-[6px] h-[6px] rounded-full"
               ></div>
-              {item.value} AED
+              {item.value} INR
             </div>
           </div>
         ))}
@@ -66,7 +66,7 @@ const TodayInsightGraph = ({ className = "", graphClassName = "" }) => {
   return (
     <section
       className={`h-[290px] lg:h-full relative col-span-1 lg:col-span-2 flex items-end 
-      justify-start bg-[#0D0D0D] rounded-xl p-6  z-0 ${className}`}
+      justify-start bg-[#0D0D0D] rounded-xl p-6  ${className}`}
     >
       {isFullScreenModalOpen && (
         <div className="w-full  mb-5 flexEnd absolute top-5 right-5">
@@ -191,7 +191,7 @@ const TodayInsightGraph = ({ className = "", graphClassName = "" }) => {
           <div className="flexEnd gap-x-4">
             <DateSelector
               setDate={setDate}
-              dateOption={["Previous Year", "This Year"]}
+              dateOption={["Previous Year", "This Year", "Custom"]}
               initialDate={date}
             />
             <button

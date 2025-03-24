@@ -16,15 +16,6 @@ import { getTotalSales } from "../../../../api/hook";
 import NoDataLoading from "../../../shared/loader";
 import { getFormattedDate } from "../../../../lib/GetFormatedDate";
 
-//   { name: "Mon", "Last Week": 3004, "This Week": 4504 },
-//   { name: "Tue", "Last Week": 3650, "This Week": 4400 },
-//   { name: "Wed", "Last Week": 3500, "This Week": 5100 },
-//   { name: "Thu", "Last Week": 2800, "This Week": 3800 },
-//   { name: "Fri", "Last Week": 3200, "This Week": 4200 },
-//   { name: "Sat", "Last Week": 3100, "This Week": 4600 },
-//   { name: "Sun", "Last Week": 3800, "This Week": 5200 },
-// ];
-
 const SalesAreaChart = ({ className, graphClassName }) => {
   const today = new Date();
   const startOfWeek = new Date(today);
@@ -42,6 +33,15 @@ const SalesAreaChart = ({ className, graphClassName }) => {
     setFullScreenGraph,
     setFullScreenModalOpen,
   } = UseCommon();
+
+  // Calculate sums for both weeks
+  const thisWeek = data
+    ? data.reduce((sum, item) => sum + (item["This Week"] || 0), 0)
+    : 0;
+  const lastWeek = data
+    ? data.reduce((sum, item) => sum + (item["Last Week"] || 0), 0)
+    : 0;
+
   if (isLoading)
     return <NoDataLoading className={"col-span-1 lg:col-span-2"} />;
   return (
@@ -82,7 +82,7 @@ const SalesAreaChart = ({ className, graphClassName }) => {
             </defs>
             {/* Axes */}
             <XAxis
-              dataKey="day"
+              dataKey="Name"
               tickLine={false}
               axisLine={false}
               tick={false}
@@ -93,7 +93,7 @@ const SalesAreaChart = ({ className, graphClassName }) => {
             {/* Areas with Gradient */}
             <Area
               type="monotone"
-              dataKey="lastWeek"
+              dataKey="Last Week"
               stroke="#1A9FFF"
               strokeWidth={2}
               fill="url(#colorLastWeek)"
@@ -101,13 +101,15 @@ const SalesAreaChart = ({ className, graphClassName }) => {
             />
             <Area
               type="monotone"
-              dataKey="thisWeek"
+              dataKey="This Week"
               stroke="#2ECC71"
               strokeWidth={2}
               fill="url(#colorThisWeek)"
               dot={true}
             />
-            <Legend content={<CustomLegend />} />{" "}
+            <Legend
+              content={<CustomLegend thisWeek={thisWeek} lastWeek={lastWeek} />}
+            />{" "}
           </AreaChart>
         </ResponsiveContainer>
       </div>
@@ -118,7 +120,7 @@ const SalesAreaChart = ({ className, graphClassName }) => {
             <DateSelector
               setDate={setDate}
               initialDate={date}
-              dateOption={["This Week", "Previous Week"]}
+              dateOption={["This Week", "Previous Week", "Custom"]}
             />
             <button
               onClick={() =>
@@ -140,7 +142,7 @@ const SalesAreaChart = ({ className, graphClassName }) => {
 };
 
 const CustomLegend = (props) => {
-  const { payload } = props; // `payload` contains the legend items
+  const { payload, thisWeek, lastWeek } = props; // Now receiving lastWeek as prop
   const { isSideBarOpen } = UseCommon();
   return (
     <ul
@@ -185,8 +187,8 @@ const CustomLegend = (props) => {
       ))}
       <hr className="absolute left-0 right-3 top-2 mx-auto w-[1px] h-[20px] bg-[#BDC9D3]" />
       <div className="absolute left-0 gap-x-24 right-0 flexCenter text-xs font-light mx-auto top-5 ">
-        <span>$3,004</span>
-        <span>$3,004</span>
+        <span>₹{thisWeek.toFixed(2)}</span>
+        <span>₹{lastWeek.toFixed(2)}</span>
       </div>
     </ul>
   );

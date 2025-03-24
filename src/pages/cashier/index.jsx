@@ -19,39 +19,27 @@ const CashierReport = () => {
       {data?.map((item, index) => (
         <div key={index} className=" grid lg:grid-cols-2 gap-3">
           <div className="bg-[#0D0D0D] p-5 rounded-lg flex flex-col">
-            <span className="text-2xl font-semibold">{item?.counter}</span>
             <div className="flex flex-col mt-5 gap-y-3">
-              <p className="text-sm font-light text-[#FAFAFA]">Cashier Name</p>
-              <button className="flexStart text-lg text-[#A4F4E7] gap-x-2">
-                {item?.name} <img src="/icons/arrowDown.svg" alt="" />
+              <h1 className="text-2xl">Cashier Reports</h1>
+              <p className="text-sm font-light text-[#FAFAFA] mt-5">
+                Cashier Name
+              </p>
+              <button className="flexStart text-xl font-semibold text-[#A4F4E7] gap-x-2">
+                {item?.employeeName} <img src="/icons/arrowDown.svg" alt="" />
               </button>
-              <p className="text-sm font-light text-[#FAFAFA]">
+              <p className="text-sm font-light mt-5 text-[#FAFAFA]">
                 Opening Balance
               </p>
-              <span className="text-xl font-semibold">
-                {item?.openingBalence} INR
+              <span className="text-3xl font-semibold">
+                {item?.totalAmount} INR
               </span>
-              <p className="text-sm font-light text-[#FAFAFA]">Shift Timing</p>
-              <div className="flexBetween text-lg">
-                <h5 className="">In</h5>
-                <span className="font-light text-gray-400 text-base">
-                  {item?.shiftTiming?.in}
-                </span>
-              </div>
-              <div className="flexBetween text-lg ">
-                <h5>Out</h5>
-                <span className="font-light text-base text-gray-400">
-                  {item?.shiftTiming?.out}
-                </span>
-              </div>
-              <h4 className="mt-2 text-lg">Closing Balance</h4>
-              <p className="text-sm font-light text-[#FAFAFA]">
-                {item?.closingBalence} INR
-              </p>
             </div>
           </div>
           <div className="rounded-lg">
-            <CashierPerformance className={"h-full"} data={item?.collection} />
+            <CashierPerformance
+              className={"h-full"}
+              data={item?.paymentCollection}
+            />
           </div>
         </div>
       ))}

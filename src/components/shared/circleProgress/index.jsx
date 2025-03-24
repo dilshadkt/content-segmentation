@@ -24,7 +24,7 @@ const CircularProgress = ({
         <b className="mx-1 bg-gray-800 px-1 shadow-lg rounded-sm">
           <i>2000</i>
         </b>{" "}
-        AED
+        INR
       </span>
       <div className="hover:scale-105 transition-all duration-300">
         <div className="flex flex-col items-center">

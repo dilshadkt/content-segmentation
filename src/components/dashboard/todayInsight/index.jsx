@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { cardsData } from "../../../constants";
 import { getTodayInsight } from "../../../api/hook";
 import NoDataLoading from "../../shared/loader";
+import DateSelector from "../../../components/shared/customSelector/index";
+import { getFormattedDate } from "../../../lib/GetFormatedDate";
 
 const TodayInsight = ({ className }) => {
-  const { data, isLoading } = getTodayInsight();
+  const [date, setDate] = useState({
+    from: getFormattedDate(0),
+    to: getFormattedDate(0),
+  });
+  const { data, isLoading } = getTodayInsight(date);
 
   if (isLoading) return <NoDataLoading className={"lg:col-span-3"} />;
   return (
@@ -15,11 +21,18 @@ const TodayInsight = ({ className }) => {
       <div className="flexBetween">
         <div className="flex flex-col ">
           <h4 className="text-[#B5B3B3] font-bold md:text-3xl">
-            Today Insights
+            Sales Insights
           </h4>
           <span className=" text-xs md:text-sm text-[#737791] mt-1">
             Income Statement Summary
           </span>
+        </div>
+        <div>
+          <DateSelector
+            setDate={setDate}
+            dateOption={["Today", "Yesterday", "This Week", "Previous Week"]}
+            initialDate={date}
+          />
         </div>
       </div>
       <div className="h-full grid gap-y-3 md:grid-cols-3 gap-x-4">
@@ -29,7 +42,7 @@ const TodayInsight = ({ className }) => {
         >
           <img src={"/icons/icome.svg"} alt="" className="w-8" />
           <span className="font-semibold text-[#9F9C9C] text-lg mt-1">
-            {data?.income}
+            {data?.Income}
           </span>
           <span className="font-medium text-[#9F9C9C]">Income</span>
           <span className="font-light text-xs text-[#898384] -translate-y-[2px]">
@@ -42,7 +55,7 @@ const TodayInsight = ({ className }) => {
         >
           <img src={"/icons/expense.svg"} alt="" className="w-8" />
           <span className="font-semibold text-[#9F9C9C] text-lg mt-1">
-            {data?.expense}
+            {data?.Expense}
           </span>
           <span className="font-medium text-[#9F9C9C]">Expense</span>
           <span className="font-light text-xs text-[#898384] -translate-y-[2px]">
@@ -55,7 +68,7 @@ const TodayInsight = ({ className }) => {
         >
           <img src={"/icons/profit.svg"} alt="" className="w-8" />
           <span className="font-semibold text-[#9F9C9C] text-lg mt-1">
-            {data?.profit}
+            {data?.GrossProfit}
           </span>
           <span className="font-medium text-[#9F9C9C]">Gross Profit</span>
           <span className="font-light text-xs text-[#898384] -translate-y-[2px]">

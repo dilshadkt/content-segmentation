@@ -10,7 +10,7 @@ const WeekPerformance = () => {
         >
           <div className="flexStart">
             <span>200.00</span>
-            <span>AED</span>
+            <span>INR</span>
           </div>
           <span
             className="absolute text-[#9F9C9C] w-fit

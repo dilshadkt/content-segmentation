@@ -51,7 +51,7 @@ const ProductMovement = ({ className, graphClassName }) => {
     <section
       className={`${
         isSideBarOpen ? `col-span-1 2xl:col-span-2` : `lg:col-span-2`
-      } bg-[#0D0D0D] flex flex-col rounded-xl p-6 relative ${className}`}
+      } bg-[#0D0D0D] min-h-[320px] flex flex-col rounded-xl p-6 relative ${className}`}
     >
       {isFullScreenModalOpen && (
         <div className="w-full absolute top-4 right-5 flexEnd">
@@ -116,7 +116,7 @@ const ProductMovement = ({ className, graphClassName }) => {
                 }}
               />
               <LabelList
-                dataKey="value"
+                dataKey="ItemCount"
                 position="inside"
                 fill="#fff"
                 formatter={(value) => `${value.toLocaleString()}%`}
@@ -164,7 +164,7 @@ const ProductMovement = ({ className, graphClassName }) => {
             <DateSelector
               setDate={setDate}
               initialDate={date}
-              dateOption={["This Month", "Previous Month"]}
+              dateOption={["This Month", "Previous Month", "Custom"]}
             />
             <button
               onClick={() =>

@@ -1,6 +1,8 @@
 import axios from "axios";
 
 const apiClient = axios.create({
+  // baseURL:
+  // "https://forzareport-gpbhfsbshdfvhuh8.eastus-01.azurewebsites.net/api",
   baseURL: "https://content-segmentation-api.onrender.com/api",
   // baseURL: "http://localhost:3000/api",
   headers: {
@@ -28,12 +30,10 @@ apiClient.interceptors.response.use(
       error.response?.status === 401 ||
       error.response?.data?.message === "Invalid token"
     ) {
-      localStorage.removeItem("token");
-      if (!window.location.href.includes("/auth/signin")) {
-        window.location.href = "/auth/signin";
+      // localStorage.removeItem("token");
+      if (!window.location.href.includes("/auth/login")) {
+        // window.location.href = "/auth/signin";
       }
-      // Clear the token
-      // window.location.href = "/auth/signin"; // Redirect to login page
     }
     return Promise.reject(
       error.response?.data?.error || "Something went wrong"

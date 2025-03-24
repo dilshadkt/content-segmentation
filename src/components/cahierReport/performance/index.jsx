@@ -18,91 +18,69 @@ const CashierPerformance = ({ className, graphClassName, data }) => {
     UseCommon();
   const filteredData = data?.map((item) => ({
     ...item,
-    value: Number(item.value),
+    value: Number(item.amount),
   }));
+
+  // Calculate total amount
+  const totalAmount = data
+    ? data.reduce((sum, entry) => sum + entry.amount, 0)
+    : 0;
+
   return (
     <section
       className={` ${
         isSideBarOpen ? `col-span-1 2xl:col-span-2` : `lg:col-span-2`
-      } bg-[#0D0D0D] flex flex-col  shadow-2xl shadow-slate-700/20
+      } bg-[#0D0D0D] flex flex-col shadow-2xl shadow-slate-700/20
          rounded-xl p-6 relative ${className}`}
     >
+      {isFullScreenModalOpen && (
+        <div className="top-4 right-5 absolute flexEnd">
+          <button onClick={() => setFullScreenModalOpen(false)}>
+            <CloseIcon className="text-white/45" />
+          </button>
+        </div>
+      )}
+
       {!isFullScreenModalOpen && (
-        <div className=" flex flex-col     w-full ">
+        <div className="flex flex-col w-full mb-4">
           <span className="text-[#9F9C9C] md:text-lg font-medium">
             Collection distribution today{" "}
           </span>
           <p className="text-xs mt-2 font-light">Total amount</p>
           <span className="text-xl font-semibold text-[#FAFAFA]">
-            365.61 AED
+            {totalAmount.toFixed(2)} INR
           </span>
         </div>
       )}
-      <div
-        className={`relative grid ${
-          isSideBarOpen ? ` grid-cols-3 xl:grid-cols-2` : ` grid-cols-2`
-        }   min-h-[340px]  md:h-full gap-y-2 `}
-      >
-        <div className="flex text-[#FAFAFA] flex-col gap-y-4 justify-center">
-          <div className="grid gap-y-4 xl:grid-cols-2">
-            <div className="flex flex-col gap-y-5">
-              <div className="flexStart gap-x-2">
-                <div className="w-3 aspect-square rounded-[3px] bg-[#F68058]"></div>
-                <span className="text-xs">Cash 40%</span>
-              </div>
-              <div className="flexStart gap-x-2">
-                <div className="w-3 aspect-square rounded-[3px] bg-[#31D7DD]"></div>
-                <span className="text-xs">UPI 40%</span>
-              </div>
-            </div>
-            <div className="flex flex-col gap-y-5">
-              <div className="flexStart gap-x-2">
-                <div className="w-3 aspect-square rounded-[3px] bg-[#F8E27F]"></div>
-                <span className="text-xs">Google Pay 40%</span>
-              </div>
-              <div className="flexStart gap-x-2">
-                <div className="w-3 aspect-square rounded-[3px] bg-[#BC277E]"></div>
-                <span className="text-xs">Credit 40%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className={`${
-            isSideBarOpen ? ` col-span-2 xl:col-span-1` : `col-span-1`
-          } flexCenter  h-full`}
-        >
+
+      <div className="relative flex flex-col items-center min-h-[300px]">
+        {/* Chart with integrated legend */}
+        <div className="w-full h-full flex flex-col items-center">
           <ResponsiveContainer
             width="100%"
-            height={isFullScreenModalOpen ? 200 : "100%"}
+            height={isFullScreenModalOpen ? 250 : 300}
           >
             <PieChart>
               <Pie
                 data={filteredData}
-                innerRadius={isFullScreenModalOpen ? 68 : 58}
-                outerRadius={isFullScreenModalOpen ? 105 : 95}
-                dataKey="value"
+                innerRadius={isFullScreenModalOpen ? 70 : 80}
+                outerRadius={isFullScreenModalOpen ? 110 : 130}
+                dataKey="amount"
                 paddingAngle={4}
                 stroke="none"
                 cornerRadius={7}
               >
-                {data.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index]}
-                    filter={`drop-shadow(0 0 3px ${COLORS[index]})`}
-                  >
-                    <Label
-                      value={entry.value.toLocaleString()}
-                      position="center"
-                      fill="#fff"
-                      style={{
-                        fontSize: "0.75rem",
-                        fontWeight: 400,
-                      }}
+                {data &&
+                  data.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                      filter={`drop-shadow(0 0 3px ${
+                        COLORS[index % COLORS.length]
+                      })`}
                     />
-                  </Cell>
-                ))}
+                  ))}
+
                 <Label
                   value="Cash"
                   position="center"
@@ -114,33 +92,61 @@ const CashierPerformance = ({ className, graphClassName, data }) => {
                   }}
                 />
                 <Label
-                  value={"900AED"}
-                  //   value={data
-                  //     .reduce((sum, entry) => sum + entry.value, 0)
-                  //     .toLocaleString()}
+                  value={`${totalAmount.toFixed(2)} INR`}
                   position="center"
                   dy={20}
                   style={{
                     fontSize: "1.2rem",
                     fontWeight: 400,
                     fill: "#FFFFFF",
-                    transform: "translateY(-10px)",
+                    transform: "translateY(-5px)",
                   }}
                 />
                 <LabelList
-                  dataKey="value"
+                  dataKey="amount"
                   position="inside"
                   fill="#fff"
-                  formatter={(value) => `${value.toLocaleString()}%`}
+                  formatter={(value) => `${value.toFixed(1)}%`}
                   style={{
-                    fontSize: "0.65rem",
-                    fontWeight: 400,
+                    fontSize: "0.75rem",
+                    fontWeight: 500,
                   }}
                 />
               </Pie>
-              <Tooltip />
+              <Tooltip
+                formatter={(value) => [`${value.toFixed(1)}%`, "Amount"]}
+                contentStyle={{
+                  backgroundColor: "#1A1A1A",
+                  borderColor: "#333",
+                }}
+                itemStyle={{ color: "#FFF" }}
+              />
             </PieChart>
           </ResponsiveContainer>
+
+          {/* Payment Methods Legend */}
+          <div className="flex flex-wrap justify-center mt-4 gap-6">
+            {data &&
+              data.map((item, index) => (
+                <div
+                  key={`legend-${index}`}
+                  className="flex items-center gap-2"
+                >
+                  <div
+                    className="w-3 aspect-square rounded-[3px]"
+                    style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                  ></div>
+                  <div className="flex flex-col">
+                    <span className="text-xs text-white">
+                      {item.paymentMode}
+                    </span>
+                    <span className="text-xs text-gray-400">
+                      {item.amount.toFixed(1)}%
+                    </span>
+                  </div>
+                </div>
+              ))}
+          </div>
         </div>
       </div>
     </section>

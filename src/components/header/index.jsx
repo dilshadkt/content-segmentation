@@ -1,6 +1,8 @@
 import React from "react";
 import DehazeIcon from "@mui/icons-material/Dehaze";
 import { UseCommon } from "../../hooks/UseCommon";
+import { FaUser } from "react-icons/fa";
+
 const DashboardHeader = () => {
   const { isSideBarOpen, setSideBarOpen } = UseCommon();
   return (
@@ -19,17 +21,13 @@ const DashboardHeader = () => {
         <div className="flexEnd gap-x-3 md:gap-x-6">
           <div
             className="w-[40px] aspect-square overflow-hidden 
-        flexCenter  rounded-full md:rounded-lg"
+        flexCenter text-gray-500 border-gray-500  border-dashed border-2 cursor-pointer hover:border-gray-100
+        hover:text-gray-200 rounded-full"
           >
-            <img
-              src="/image/profile.png"
-              alt=""
-              className="w-full h-full object-cover"
-            />
+            <FaUser />
           </div>
           <div className="flexStart gap-x-14">
             <div className="md:flex hidden flex-col font-light text-sm">
-              <span className="text-[#8C79E5] font-medium">Musfig</span>
               <span className="text-xs text-[#726C6C]">Admin</span>
             </div>
             <button>

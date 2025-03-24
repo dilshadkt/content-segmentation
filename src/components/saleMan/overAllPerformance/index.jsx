@@ -44,7 +44,7 @@ const OverAllPerfomance = ({ className, graphClassName }) => {
       >
         <div className="flex text-[#FAFAFA] flex-col gap-y-4 justify-center">
           <h5 className="md:text-lg  text-[#9F9C9C]">Total Covered Sale</h5>
-          <span className="md:text-lg">33300 AED</span>
+          <span className="md:text-lg">33300 INR</span>
           <ul className="flex md:flex-col gap-4">
             {[
               {
@@ -118,10 +118,10 @@ const OverAllPerfomance = ({ className, graphClassName }) => {
                   }}
                 />
                 <Label
-                  value={"900AED"}
-                  //   value={data
-                  //     .reduce((sum, entry) => sum + entry.value, 0)
-                  //     .toLocaleString()}
+                  // value={"900 INR"}
+                  value={data
+                    .reduce((sum, entry) => sum + entry.value, 0)
+                    .toLocaleString()}
                   position="center"
                   dy={20}
                   style={{

@@ -42,7 +42,7 @@ const TopSelling = ({ className }) => {
         </div>
       )}
 
-      <div className="w-full mt-12">
+      <div className="w-full mt-12 overflow-y-auto">
         <table className="w-full">
           <thead className="border-b border-[#1A1A1A] text-[#B5B3B3]">
             <tr>
@@ -62,7 +62,9 @@ const TopSelling = ({ className }) => {
                   key={index}
                   className="border-b text-[#B5B3B3] text-sm border-[#1A1A1A]"
                 >
-                  <td className="py-[10px] pl-7 font-light">{item.category}</td>
+                  <td className="py-[10px] pl-7 font-light">
+                    {item.Department}
+                  </td>
                   <td className="py-[10px] pr-5">
                     <div className="flexBetween gap-x-7">
                       <div
@@ -72,20 +74,25 @@ const TopSelling = ({ className }) => {
                         <div
                           className="absolute top-0 left-0 h-full rounded-full"
                           style={{
-                            width: `${item.progress}%`,
+                            width: `${item.SalesPercentage}%`,
                             backgroundColor: color.activeColor,
                           }}
                         ></div>
                       </div>
-                      <span
-                        className="border text-xs flexCenter py-1 px-2 rounded-lg"
-                        style={{
-                          borderColor: color.activeColor,
-                          color: color.activeColor,
-                        }}
-                      >
-                        {item.progress}%
-                      </span>
+                      <div className="flex flex-col gap-y-2">
+                        <span
+                          className="border text-xs flexCenter py-1 px-2 rounded-lg"
+                          style={{
+                            borderColor: color.activeColor,
+                            color: color.activeColor,
+                          }}
+                        >
+                          {item.SalesPercentage}%
+                        </span>
+                        <span className="text-xs text-gray-600 pt-1">
+                          {item?.TotalSales?.toFixed(2)}
+                        </span>
+                      </div>
                     </div>
                   </td>
                 </tr>
@@ -104,7 +111,7 @@ const TopSelling = ({ className }) => {
             <DateSelector
               setDate={setDate}
               initialDate={date}
-              dateOption={["This Week", "Previous Week"]}
+              dateOption={["This Week", "Previous Week", "Custom"]}
             />
             <button
               onClick={() =>
