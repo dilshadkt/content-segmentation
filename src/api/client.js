@@ -3,7 +3,8 @@ import axios from "axios";
 const apiClient = axios.create({
   // baseURL:
   // "https://forzareport-gpbhfsbshdfvhuh8.eastus-01.azurewebsites.net/api",
-  baseURL: "https://content-segmentation-api.onrender.com/api",
+  baseURL:
+    "https://forzareport-gpbhfsbshdfvhuh8.eastus-01.azurewebsites.net/api",
   // baseURL: "http://localhost:3000/api",
   headers: {
     "Content-Type": "application/json",
